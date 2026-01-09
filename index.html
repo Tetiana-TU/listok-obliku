@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Щоденний облік лікаря</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h2>Щоденний облік роботи лікаря</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Дата</th>
+          <th>Пацієнт</th>
+          <th>Діагноз</th>
+          <th>Процедура 1</th>
+          <th>Процедура 2</th>
+          <th>Процедура 3</th>
+          <th>Вид знеболювання</th>
+          <th>Ціна</th>
+          <th>Сума (10)</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <button onclick="addRow()">➕ Додати рядок</button>
+
+    <div class="summary">
+      <p>Всього за день: <strong id="dayTotal">0</strong> грн</p>
+      <p>Всього за місяць: <strong id="monthTotal">0</strong> грн</p>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
