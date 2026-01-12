@@ -2,36 +2,124 @@
 <html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <title>Щоденний облік лікаря</title>
+    <title>Форма №037/о</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h2>Щоденний облік роботи лікаря</h2>
+    <div class="form-header">
+      <div class="left">
+        <p>Міністерство охорони здоров’я України</p>
+        <p>__________________________________</p>
+        <p class="small">(найменування закладу охорони здоров’я)</p>
+      </div>
 
-    <table>
+      <div class="right">
+        <p><strong>Форма № 037/о</strong></p>
+        <p class="small">
+          Затверджено наказом МОЗ України<br />
+          від 14.02.2012 № 110
+        </p>
+      </div>
+    </div>
+
+    <h2 class="title">
+      Листок<br />
+      щоденного обліку роботи лікаря-стоматолога (стоматологічної поліклінікі,
+      відділення, кабінету)
+    </h2>
+
+    <div class="period-row">
+      <div class="period-left">
+        за
+        <select id="monthSelect"></select>
+        <select id="yearSelect"></select>
+        р.
+      </div>
+
+      <div class="period-right">
+        <select id="doctorSelect"></select>
+        <div class="hint">(прізвище, ім"я, по-батькові лікаря)</div>
+      </div>
+    </div>
+
+    <table class="med-table">
       <thead>
+        <!-- ПЕРШИЙ РЯДОК ЗАГОЛОВКІВ -->
         <tr>
-          <th>Дата</th>
-          <th>Пацієнт</th>
-          <th>Діагноз</th>
+          <th rowspan="2">Номер п/п</th>
+          <th rowspan="2">Години прийому</th>
+          <th rowspan="2">Прізвище, ім’я, по батькові пацієнта</th>
+          <th rowspan="2">Кількість повних років</th>
+          <th rowspan="2">Відвідування (первинне, повторне)</th>
+          <th rowspan="2">
+            Номер медичної карти стоматологічного хворого, номер наряду
+          </th>
+          <th rowspan="2">Місце проживання (жит.міста (м), села (с))</th>
+          <th rowspan="2">Група населення (ДГ,Ш,С,В,Р,ДПК,Д)</th>
+          <th rowspan="2">Діагноз</th>
+
+          <!-- ГРУПА З 3 КОЛОНОК -->
+          <th colspan="3">
+            Комплекс виконаного лікування чи його етап, включаючи суміжні
+            спеціальності
+          </th>
+
+          <th rowspan="2">Вид знеболювання</th>
+          <th rowspan="2">Сановано (всього)</th>
+          <th rowspan="2">У тому числі планова санація</th>
+          <th rowspan="2">Відпрацьовано умовних одиниць праці (УОП)</th>
+        </tr>
+
+        <!-- ДРУГИЙ РЯДОК — ПІДКОЛОНКИ -->
+        <tr>
           <th>Процедура 1</th>
           <th>Процедура 2</th>
           <th>Процедура 3</th>
-          <th>Вид знеболювання</th>
-          <th>Ціна</th>
-          <th>Сума (10)</th>
+        </tr>
+
+        <!-- РЯДОК НУМЕРАЦІЇ ГРАФ -->
+        <tr class="col-numbers">
+          <th>(1)</th>
+          <th>(2)</th>
+          <th>(3)</th>
+          <th>(4)</th>
+          <th>(5)</th>
+          <th>(6)</th>
+          <th>(7)</th>
+          <th>(8)</th>
+          <th>(9)</th>
+          <th colspan="3">(10)</th>
+          <th>(11)</th>
+          <th>(12)</th>
+          <th>(13)</th>
+          <th>(14)</th>
         </tr>
       </thead>
-      <tbody id="tableBody"></tbody>
+
+      <tbody id="tableBody">
+        <!-- Дані заповнюються -->
+        <tr class="input-row">
+          <td contenteditable="true" class="col-1"></td>
+          <td contenteditable="true" class="col-2"></td>
+          <td contenteditable="true" class="col-3"></td>
+          <td contenteditable="true" class="col-4"></td>
+          <td contenteditable="true" class="col-5"></td>
+          <td contenteditable="true" class="col-6"></td>
+          <td contenteditable="true" class="col-7"></td>
+          <td contenteditable="true" class="col-8"></td>
+          <td contenteditable="true" class="col-9"></td>
+          <td contenteditable="true" class="col-10"></td>
+          <td contenteditable="true" class="col-11"></td>
+          <td contenteditable="true" class="col-12"></td>
+          <td contenteditable="true" class="col-13"></td>
+          <td contenteditable="true" class="col-14"></td>
+        </tr>
+      </tbody>
     </table>
 
-    <button onclick="addRow()">➕ Додати рядок</button>
-
-    <div class="summary">
-      <p>Всього за день: <strong id="dayTotal">0</strong> грн</p>
-      <p>Всього за місяць: <strong id="monthTotal">0</strong> грн</p>
+    <div class="footer">
+      <p>Лікар _______________________ (підпис)</p>
     </div>
-
     <script src="script.js"></script>
   </body>
 </html>

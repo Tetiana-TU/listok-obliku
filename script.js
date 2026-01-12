@@ -1,120 +1,214 @@
-const diagnoses = ["Карієс", "Пульпіт", "Періодонтит", "Профогляд"];
+document.addEventListener("DOMContentLoaded", () => {
+  const monthSelect = document.getElementById("monthSelect");
+  const yearSelect = document.getElementById("yearSelect");
 
-const procedures = {
-  Пломба: 800,
-  Видалення: 600,
-  Чистка: 1200,
-  Рентген: 300,
-};
+  const months = [
+    "січень",
+    "лютий",
+    "березень",
+    "квітень",
+    "травень",
+    "червень",
+    "липень",
+    "серпень",
+    "вересень",
+    "жовтень",
+    "листопад",
+    "грудень",
+  ];
 
-const anesthesiaTypes = [
-  "Без знеболювання",
-  "Аплікаційне",
-  "Інфільтраційне",
-  "Провідникове",
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  // Заповнення місяців
+  months.forEach((month, index) => {
+    const option = document.createElement("option");
+    option.value = index + 1;
+    option.textContent = month;
+    if (index === currentMonth) option.selected = true;
+    monthSelect.appendChild(option);
+  });
+
+  // Заповнення років (±10 років)
+  for (let year = currentYear - 10; year <= currentYear + 10; year++) {
+    const option = document.createElement("option");
+    option.value = year;
+    option.textContent = year;
+    if (year === currentYear) option.selected = true;
+    yearSelect.appendChild(option);
+  }
+});
+const doctorSelect = document.getElementById("doctorSelect");
+// Список лікарів
+const doctors = [
+  "Дмитриєнко Віталій Вячеславович",
+  "Петренко Петро Петрович",
+  "Сидоренко Сидір Сидорович",
+  "Ковальчук Олена Миколаївна",
 ];
 
-const columnsCount = 8; // кількість активних колонок (без "Сума")
+// Заповнення select
+doctors.forEach((doc) => {
+  const option = document.createElement("option");
+  option.value = doc;
+  option.textContent = doc;
+  doctorSelect.appendChild(option);
+});
 
-function addRow() {
-  const tr = document.createElement("tr");
+// === Завантаження з localStorage ===
+const savedDoctor = localStorage.getItem("selectedDoctor");
+if (savedDoctor) {
+  doctorSelect.value = savedDoctor;
+}
 
-  tr.innerHTML = `
-        <td><input type="date" data-col="0"></td>
-        <td><input type="text" data-col="1"></td>
-        <td>${createSelect(diagnoses, 2)}</td>
-        <td>${createProcedureSelect(3)}</td>
-        <td>${createProcedureSelect(4)}</td>
-        <td>${createProcedureSelect(5)}</td>
-        <td>${createSelect(anesthesiaTypes, 6)}</td>
-        <td><input type="number" value="0" data-col="7"></td>
-        <td class="sum">0</td>
-    `;
+// === Збереження при зміні ===
+doctorSelect.addEventListener("change", () => {
+  localStorage.setItem("selectedDoctor", doctorSelect.value);
+});
 
-  tr.querySelectorAll("input, select").forEach((el) => {
-    el.addEventListener("keydown", handleKeyNav);
-    el.addEventListener("change", () => {
-      if (el.tagName === "SELECT") setPrice(el);
-      calculateRow(el);
-    });
+const tbody = document.getElementById("tableBody");
+
+const groups = ["_", "ДГ", "Ш", "С", "В", "Р", "ДПК", "Д"];
+
+function focusNextCell(currentCell) {
+  const allCells = Array.from(
+    tbody.querySelectorAll("td[contenteditable='true'], td.selectable")
+  );
+  const index = allCells.indexOf(currentCell);
+  if (index >= 0 && index < allCells.length - 1) {
+    allCells[index + 1].focus();
+  }
+}
+
+// function focusPrevCell(currentCell) {
+//   const allCells = Array.from(
+//     tbody.querySelectorAll("td[contenteditable='true']")
+//   );
+//   const index = allCells.indexOf(currentCell);
+//   if (index > 0) {
+//     allCells[index - 1].focus();
+//   }
+// }
+
+tbody.addEventListener("keydown", (e) => {
+  const target = e.target;
+  if (target.tagName.toLowerCase() !== "td") return;
+
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const allCells = Array.from(
+      tbody.querySelectorAll("td[contenteditable='true'], td.selectable")
+    );
+    const index = allCells.indexOf(target);
+    if (index > 0) {
+      allCells[index - 1].focus();
+    }
+    switch (e.key) {
+      case "Enter":
+        e.preventDefault();
+
+        // Перша колонка — нумерація
+        if (target.classList.contains("col-1")) {
+          target.textContent = "1";
+          focusNextCell(target);
+          return;
+        }
+
+        // Друга колонка — час
+        if (target.classList.contains("col-2")) {
+          const now = new Date();
+          target.textContent =
+            String(now.getHours()).padStart(2, "0") +
+            ":" +
+            String(now.getMinutes()).padStart(2, "0");
+          focusNextCell(target);
+          return;
+        }
+
+        // Якщо наступна колонка — 8-а, створюємо select автоматично
+        const nextCell = (() => {
+          const all = Array.from(
+            tbody.querySelectorAll("td[contenteditable='true'], td.selectable")
+          );
+          const idx = all.indexOf(target);
+          return idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
+        })();
+
+        if (nextCell && nextCell.classList.contains("col-8")) {
+          e.preventDefault();
+          createGroupSelect(nextCell); // функція створення select
+        }
+
+        focusNextCell(target);
+        break;
+
+      case "ArrowRight":
+        e.preventDefault();
+        focusNextCell(target);
+        break;
+
+      case "ArrowLeft":
+        e.preventDefault();
+        focusPrevCell(target);
+        break;
+    }
+  }
+});
+
+// --- Функція створення select для 8-ї колонки ---
+function createGroupSelect(td) {
+  if (td.querySelector("select")) return; // якщо вже є
+
+  td.classList.add("selectable");
+  const select = document.createElement("select");
+  select.style.width = "100%";
+
+  groups.forEach((q) => {
+    const option = document.createElement("option");
+    option.value = q;
+    option.textContent = q;
+    select.appendChild(option);
   });
 
-  document.getElementById("tableBody").appendChild(tr);
-}
+  select.value = td.textContent.trim() || groups[0];
 
-function createSelect(arr, col) {
-  let html = `<select data-col="${col}">`;
-  html += "<option value=''></option>";
-  arr.forEach((v) => (html += `<option value="${v}">${v}</option>`));
-  html += "</select>";
-  return html;
-}
+  td.textContent = "";
+  td.appendChild(select);
+  select.focus();
+  select.size = groups.length; // щоб список відразу був видимий як dropdown
 
-function createProcedureSelect(col) {
-  let html = `<select data-col="${col}">`;
-  html += "<option value=''></option>";
-  for (let p in procedures) {
-    html += `<option value="${p}">${p}</option>`;
-  }
-  html += "</select>";
-  return html;
-}
-
-function handleKeyNav(e) {
-  if (e.key !== "Enter") return;
-
-  e.preventDefault();
-
-  const current = e.target;
-  const col = Number(current.dataset.col);
-  const row = current.closest("tr");
-
-  let next;
-
-  if (col < columnsCount - 1) {
-    next = row.querySelector(`[data-col="${col + 1}"]`);
-  } else {
-    // кінець рядка → новий рядок
-    addRow();
-    const rows = document.querySelectorAll("#tableBody tr");
-    next = rows[rows.length - 1].querySelector('[data-col="0"]');
-  }
-
-  if (next) next.focus();
-}
-
-function setPrice(select) {
-  if (!procedures[select.value]) return;
-  const row = select.closest("tr");
-  const priceInput = row.querySelector('[data-col="7"]');
-  priceInput.value = procedures[select.value];
-}
-
-function calculateRow(el) {
-  const row = el.closest("tr");
-  const price = Number(row.querySelector('[data-col="7"]').value) || 0;
-  row.querySelector(".sum").innerText = price;
-  calculateTotals();
-}
-
-function calculateTotals() {
-  let dayTotal = 0;
-  let monthTotal = 0;
-
-  const today = new Date().toISOString().slice(0, 10);
-  const currentMonth = today.slice(0, 7);
-
-  document.querySelectorAll("#tableBody tr").forEach((row) => {
-    const date = row.querySelector('[data-col="0"]').value;
-    const sum = Number(row.querySelector(".sum").innerText) || 0;
-
-    if (date === today) dayTotal += sum;
-    if (date.startsWith(currentMonth)) monthTotal += sum;
+  select.addEventListener("change", () => {
+    td.textContent = select.value;
   });
 
-  document.getElementById("dayTotal").innerText = dayTotal;
-  document.getElementById("monthTotal").innerText = monthTotal;
+  select.addEventListener("blur", () => {
+    td.textContent = select.value;
+  });
+
+  select.addEventListener("keydown", (event) => {
+    if (
+      event.key === "Enter" ||
+      event.key === "ArrowRight" ||
+      event.key === "Tab"
+    ) {
+      event.preventDefault();
+      td.textContent = select.value || "";
+      focusNextCell(td);
+    }
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      td.textContent = select.value || "";
+      focusPrevCell(td);
+    }
+  });
 }
 
-// старт
-addRow();
+// const diagnoses = ["Карієс", "Пульпіт", "Періодонтит", "Профогляд"];
+
+// const anesthesiaTypes = [
+//   "Без знеболювання",
+//   "Аплікаційне",
+//   "Інфільтраційне",
+//   "Провідникове",
+// ];

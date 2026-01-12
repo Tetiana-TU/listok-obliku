@@ -42,3 +42,77 @@ button {
   margin-top: 20px;
   font-size: 18px;
 }
+.period-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 15px 0 20px;
+  font-size: 14px;
+}
+.period-left {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+  font-family: "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.period-left select {
+  display: inline-block;
+  border: none;
+  border-bottom: 1px solid #000;
+  font-family: "Times New Roman", serif;
+  background: transparent;
+  padding: 0 6px;
+  line-height: 1.2;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+
+  /* Важливі зміни: */
+  min-width: 90px; /* мінімальна ширина для довгих назв місяців */
+  text-align: center; /* красиво по центру */
+}
+
+.period-left select:focus {
+  outline: none;
+}
+.period-right {
+  width: 45%;
+  text-align: center;
+  font-family: "Times New Roman", serif;
+}
+
+.period-right select {
+  border: none;
+  font-size: 18px; /* Збільшений шрифт для ПІБ */
+  font-weight: 600; /* Трохи жирніше */
+  background: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+  text-align: center;
+  border-bottom: 1px solid #000; /* Рисочка під текстом */
+  width: 100%; /* Рисочка коротша на половину блоку */
+  margin: 0 auto; /* Центруємо по горизонталі */
+  display: block; /* Щоб margin працював */
+}
+
+.period-right .hint {
+  font-size: 12px;
+  margin-top: 4px;
+  text-align: center; /* Вирівнювання по центру */
+  width: 100%; /* Займає всю ширину контейнера */
+}
+tbody td[contenteditable="true"] {
+  border: 1px solid #aaa;
+  min-width: 100px;
+  padding: 4px 8px;
+  cursor: text;
+  vertical-align: middle;
+}
+tbody td[contenteditable="true"]:focus {
+  outline: 2px solid #4a90e2;
+  background-color: #eef5ff;
+}
