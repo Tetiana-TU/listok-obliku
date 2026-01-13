@@ -9,7 +9,6 @@ h2 {
 }
 
 table {
-  width: 100%;
   border-collapse: collapse;
   background: #fff;
 }
@@ -24,7 +23,38 @@ td {
 th {
   background: #e9ecef;
 }
+/* вертикальні заголовки */
+th.vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px 1px;
+  width: 1%; /* ← ширина стовпчика */
+}
 
+/* щоб і клітинки tbody були тієї ж ширини */
+.med-table td.col-4,
+.med-table td.col-5,
+.med-table td.col-6,
+.med-table td.col-7,
+.med-table td.col-8,
+.med-table td.col-11,
+.med-table td.col-12,
+.med-table td.col-13,
+.med-table td.col-14 {
+  table-layout: auto;
+  min-width: auto;
+  text-align: center;
+}
+td select {
+  width: auto;
+}
+table.med-table {
+  width: auto;
+  table-layout: auto;
+}
 input,
 select {
   width: 100%;
@@ -107,7 +137,7 @@ button {
 }
 tbody td[contenteditable="true"] {
   border: 1px solid #aaa;
-  min-width: 100px;
+  min-width: auto;
   padding: 4px 8px;
   cursor: text;
   vertical-align: middle;
@@ -115,4 +145,27 @@ tbody td[contenteditable="true"] {
 tbody td[contenteditable="true"]:focus {
   outline: 2px solid #4a90e2;
   background-color: #eef5ff;
+}
+.dropdown {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 150px;
+  z-index: 1000;
+}
+
+.dropdown li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background: #f0f0f0;
+}
+
+.hidden {
+  display: none;
 }

@@ -69,146 +69,89 @@ doctorSelect.addEventListener("change", () => {
 
 const tbody = document.getElementById("tableBody");
 
-const groups = ["_", "ДГ", "Ш", "С", "В", "Р", "ДПК", "Д"];
+function setDateTime(td) {
+  const now = new Date();
 
-function focusNextCell(currentCell) {
-  const allCells = Array.from(
-    tbody.querySelectorAll("td[contenteditable='true'], td.selectable")
-  );
-  const index = allCells.indexOf(currentCell);
-  if (index >= 0 && index < allCells.length - 1) {
-    allCells[index + 1].focus();
-  }
+  const date =
+    now.getDate().toString().padStart(2, "0") +
+    "." +
+    (now.getMonth() + 1).toString().padStart(2, "0") +
+    "." +
+    now.getFullYear();
+
+  const time =
+    now.getHours().toString().padStart(2, "0") +
+    ":" +
+    now.getMinutes().toString().padStart(2, "0");
+
+  td.innerHTML = `${date}<br>${time}`;
 }
 
-// function focusPrevCell(currentCell) {
-//   const allCells = Array.from(
-//     tbody.querySelectorAll("td[contenteditable='true']")
-//   );
-//   const index = allCells.indexOf(currentCell);
-//   if (index > 0) {
-//     allCells[index - 1].focus();
-//   }
-// }
+function setRowNumber(row) {
+  row.querySelector(".col-1").textContent = tbody.querySelectorAll("tr").length;
+}
 
-tbody.addEventListener("keydown", (e) => {
-  const target = e.target;
-  if (target.tagName.toLowerCase() !== "td") return;
+function addNewRow() {
+  const tr = document.createElement("tr");
+  tr.className = "input-row";
 
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const allCells = Array.from(
-      tbody.querySelectorAll("td[contenteditable='true'], td.selectable")
-    );
-    const index = allCells.indexOf(target);
-    if (index > 0) {
-      allCells[index - 1].focus();
-    }
-    switch (e.key) {
-      case "Enter":
-        e.preventDefault();
-
-        // Перша колонка — нумерація
-        if (target.classList.contains("col-1")) {
-          target.textContent = "1";
-          focusNextCell(target);
-          return;
-        }
-
-        // Друга колонка — час
-        if (target.classList.contains("col-2")) {
-          const now = new Date();
-          target.textContent =
-            String(now.getHours()).padStart(2, "0") +
-            ":" +
-            String(now.getMinutes()).padStart(2, "0");
-          focusNextCell(target);
-          return;
-        }
-
-        // Якщо наступна колонка — 8-а, створюємо select автоматично
-        const nextCell = (() => {
-          const all = Array.from(
-            tbody.querySelectorAll("td[contenteditable='true'], td.selectable")
-          );
-          const idx = all.indexOf(target);
-          return idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
-        })();
-
-        if (nextCell && nextCell.classList.contains("col-8")) {
-          e.preventDefault();
-          createGroupSelect(nextCell); // функція створення select
-        }
-
-        focusNextCell(target);
-        break;
-
-      case "ArrowRight":
-        e.preventDefault();
-        focusNextCell(target);
-        break;
-
-      case "ArrowLeft":
-        e.preventDefault();
-        focusPrevCell(target);
-        break;
-    }
+  for (let i = 1; i <= 14; i++) {
+    const td = document.createElement("td");
+    td.contentEditable = true;
+    td.className = `col-${i}`;
+    td.dataset.col = i;
+    tr.appendChild(td);
   }
-});
 
-// --- Функція створення select для 8-ї колонки ---
-function createGroupSelect(td) {
-  if (td.querySelector("select")) return; // якщо вже є
+  tbody.appendChild(tr);
+  setRowNumber(tr);
+  setTime(tr.querySelector(".col-2"));
+  tr.querySelector(".col-3").focus();
+}
 
-  td.classList.add("selectable");
-  const select = document.createElement("select");
-  select.style.width = "100%";
+// ---------- init ----------
+const firstRow = tbody.querySelector("tr");
+setRowNumber(firstRow);
+setDateTime(firstRow.querySelector(".col-2"));
 
-  groups.forEach((q) => {
-    const option = document.createElement("option");
-    option.value = q;
-    option.textContent = q;
-    select.appendChild(option);
-  });
+const selectElement = document.getElementById("my-list");
 
-  select.value = td.textContent.trim() || groups[0];
+// Додаємо нові елементи
+const newOption1 = document.createElement("option");
+newOption1.value = "new_value";
+selectElement.appendChild(newOption1);
 
-  td.textContent = "";
-  td.appendChild(select);
-  select.focus();
-  select.size = groups.length; // щоб список відразу був видимий як dropdown
+const pointsMap = {
+  Pl: 1,
+  "ф.к.": 1,
+  рентген: 1,
+};
 
-  select.addEventListener("change", () => {
-    td.textContent = select.value;
-  });
+// Функція підрахунку сум у колонці 14
+function updateSum(row) {
+  const values = [
+    row.querySelector(".col-10-1 select")?.value,
+    row.querySelector(".col-10-2 select")?.value,
+    row.querySelector(".col-10-3 select")?.value,
+  ];
 
-  select.addEventListener("blur", () => {
-    td.textContent = select.value;
-  });
+  const sum = values.reduce((acc, val) => {
+    return acc + (pointsMap[val] || 0);
+  }, 0);
 
-  select.addEventListener("keydown", (event) => {
+  row.querySelector(".col-14").textContent = sum || "";
+}
+
+// Обробник для select у підколонках 10
+["col-10-1", "col-10-2", "col-10-3"].forEach((colClass) => {
+  tbody.addEventListener("change", (e) => {
     if (
-      event.key === "Enter" ||
-      event.key === "ArrowRight" ||
-      event.key === "Tab"
+      !e.target.matches(".col-10-1 select, .col-10-2 select, .col-10-3 select")
     ) {
-      event.preventDefault();
-      td.textContent = select.value || "";
-      focusNextCell(td);
+      return;
     }
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      td.textContent = select.value || "";
-      focusPrevCell(td);
-    }
+
+    const row = e.target.closest("tr");
+    updateSum(row);
   });
-}
-
-// const diagnoses = ["Карієс", "Пульпіт", "Періодонтит", "Профогляд"];
-
-// const anesthesiaTypes = [
-//   "Без знеболювання",
-//   "Аплікаційне",
-//   "Інфільтраційне",
-//   "Провідникове",
-// ];
+});

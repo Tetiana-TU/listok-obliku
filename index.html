@@ -49,34 +49,46 @@
           <th rowspan="2">Номер п/п</th>
           <th rowspan="2">Години прийому</th>
           <th rowspan="2">Прізвище, ім’я, по батькові пацієнта</th>
-          <th rowspan="2">Кількість повних років</th>
-          <th rowspan="2">Відвідування (первинне, повторне)</th>
-          <th rowspan="2">
-            Номер медичної карти стоматологічного хворого, номер наряду
+          <th rowspan="2" class="vertical">Кількість повних років></th>
+          <th rowspan="2" class="vertical">
+            Порядковий номер відвідування <br />
+            (первинне, вторинне)
           </th>
-          <th rowspan="2">Місце проживання (жит.міста (м), села (с))</th>
-          <th rowspan="2">Група населення (ДГ,Ш,С,В,Р,ДПК,Д)</th>
+          <th rowspan="2" class="vertical">
+            Номер медичної карти<br />
+            стоматологічного хворого, <br />номер наряду
+          </th>
+          <th rowspan="2" class="vertical">
+            Місце проживання (жит.міста<br />
+            (м), села (с))
+          </th>
+          <th rowspan="2" class="vertical">
+            Група населення <br />(ДГ,Ш,С,В,Р,ДПК,Д)
+          </th>
           <th rowspan="2">Діагноз</th>
 
           <!-- ГРУПА З 3 КОЛОНОК -->
           <th colspan="3">
-            Комплекс виконаного лікування чи його етап, включаючи суміжні
+            Комплекс виконаного лікування <br />чи його етап, включаючи
+            суміжні<br />
             спеціальності
           </th>
 
-          <th rowspan="2">Вид знеболювання</th>
-          <th rowspan="2">Сановано (всього)</th>
-          <th rowspan="2">У тому числі планова санація</th>
-          <th rowspan="2">Відпрацьовано умовних одиниць праці (УОП)</th>
+          <th rowspan="2" class="vertical">Вид знеболювання</th>
+          <th rowspan="2" class="vertical">Сановано (всього)</th>
+          <th rowspan="2" class="vertical">У тому числі планова санація</th>
+          <th rowspan="2" class="vertical">
+            Відпрацьовано умовних <br />
+            одиниць праці (УОП)
+          </th>
         </tr>
 
-        <!-- ДРУГИЙ РЯДОК — ПІДКОЛОНКИ -->
+        <!-- ДРУГИЙ РЯДОК ПІДКОЛОНОК -->
         <tr>
           <th>Процедура 1</th>
           <th>Процедура 2</th>
           <th>Процедура 3</th>
         </tr>
-
         <!-- РЯДОК НУМЕРАЦІЇ ГРАФ -->
         <tr class="col-numbers">
           <th>(1)</th>
@@ -99,20 +111,66 @@
       <tbody id="tableBody">
         <!-- Дані заповнюються -->
         <tr class="input-row">
-          <td contenteditable="true" class="col-1"></td>
-          <td contenteditable="true" class="col-2"></td>
-          <td contenteditable="true" class="col-3"></td>
-          <td contenteditable="true" class="col-4"></td>
-          <td contenteditable="true" class="col-5"></td>
-          <td contenteditable="true" class="col-6"></td>
-          <td contenteditable="true" class="col-7"></td>
-          <td contenteditable="true" class="col-8"></td>
-          <td contenteditable="true" class="col-9"></td>
-          <td contenteditable="true" class="col-10"></td>
-          <td contenteditable="true" class="col-11"></td>
-          <td contenteditable="true" class="col-12"></td>
-          <td contenteditable="true" class="col-13"></td>
-          <td contenteditable="true" class="col-14"></td>
+          <td contenteditable="true" class="col-1" data-col="1"></td>
+          <td contenteditable="true" class="col-2" data-col="2"></td>
+          <td contenteditable="true" class="col-3" data-col="3"></td>
+          <td contenteditable="true" class="col-4" data-col="4"></td>
+          <td contenteditable="true" class="col-5" data-col="5">
+            <select id="my-list" name="my-list">
+              <option value="value1">I</option>
+              <option value="value2">II</option>
+            </select>
+          </td>
+          <td contenteditable="true" class="col-6" data-col="6"></td>
+          <td contenteditable="true" class="col-7" data-col="7"></td>
+          <td contenteditable="true" class="col-8" data-col="8">
+            <!-- <select id="my-list" name="my-list">
+              <option value="value1">Значення 1</option>
+              <option value="value2">Значення 2</option>
+              <option value="value3">Значення 3</option>
+            </select> -->
+          </td>
+          <td contenteditable="true" class="col-9" data-col="9">
+            <select id="my-list" name="my-list">
+              <option value="value1">C37</option>
+              <option value="value2">C45</option>
+              <option value="value3">P33</option>
+            </select>
+          </td>
+          <td contenteditable="true" class="col-10-1" data-col="10-1">
+            <select id="my-list" name="my-list">
+              <option value="">—</option>
+              <option value="Pl">Pl</option>
+              <option value="ф.к.">ф.к.</option>
+              <option value="рентген">рентген</option>
+            </select>
+          </td>
+          <td contenteditable="true" class="col-10-2" data-col="10-2">
+            <select id="my-list" name="my-list">
+              <option value="">—</option>
+              <option value="Pl">Pl</option>
+              <option value="ф.к.">ф.к.</option>
+              <option value="рентген">рентген</option>
+            </select>
+          </td>
+          <td contenteditable="true" class="col-10-3" data-col="10-3">
+            <select id="my-list" name="my-list">
+              <option value="">—</option>
+              <option value="Pl">Pl</option>
+              <option value="ф.к.">ф.к.</option>
+              <option value="рентген">рентген</option>
+            </select>
+          </td>
+          <td contenteditable="true" class="col-11" data-col="11">
+            <select id="my-list" name="my-list">
+              <option value="value1">Без знеболювання</option>
+              <option value="value2">Аплікаційне</option>
+              <option value="value3">Інфільтраційне</option>
+            </select>
+          </td>
+          <td contenteditable="true" class="col-12" data-col="12"></td>
+          <td contenteditable="true" class="col-13" data-col="13"></td>
+          <td contenteditable="true" class="col-14" data-col="14"></td>
         </tr>
       </tbody>
     </table>
