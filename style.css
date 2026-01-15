@@ -1,5 +1,6 @@
 body {
   font-family: Arial, sans-serif;
+  size: 10px;
   background: #f4f6f8;
   padding: 20px;
 }
@@ -59,6 +60,7 @@ input,
 select {
   width: 100%;
   box-sizing: border-box;
+  border: none;
 }
 
 button {

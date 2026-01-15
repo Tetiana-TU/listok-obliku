@@ -49,7 +49,7 @@
           <th rowspan="2">Номер п/п</th>
           <th rowspan="2">Години прийому</th>
           <th rowspan="2">Прізвище, ім’я, по батькові пацієнта</th>
-          <th rowspan="2" class="vertical">Кількість повних років></th>
+          <th rowspan="2" class="vertical">Кількість повних років</th>
           <th rowspan="2" class="vertical">
             Порядковий номер відвідування <br />
             (первинне, вторинне)
@@ -116,7 +116,7 @@
           <td contenteditable="true" class="col-3" data-col="3"></td>
           <td contenteditable="true" class="col-4" data-col="4"></td>
           <td contenteditable="true" class="col-5" data-col="5">
-            <select id="my-list" name="my-list">
+            <select class="my-list" name="my-list">
               <option value="value1">I</option>
               <option value="value2">II</option>
             </select>
@@ -131,30 +131,30 @@
             </select> -->
           </td>
           <td contenteditable="true" class="col-9" data-col="9">
-            <select id="my-list" name="my-list">
-              <option value="value1">C37</option>
-              <option value="value2">C45</option>
+            <select class="my-list" name="my-list">
+              <option value="value1">Пульпіт (C37)</option>
+              <option value="value2">Перідонтит (C45)</option>
               <option value="value3">P33</option>
             </select>
           </td>
-          <td contenteditable="true" class="col-10-1" data-col="10-1">
-            <select id="my-list" name="my-list">
+          <td class="col-10-1" data-col="10-1">
+            <select class="my-list" name="my-list">
               <option value="">—</option>
               <option value="Pl">Pl</option>
               <option value="ф.к.">ф.к.</option>
               <option value="рентген">рентген</option>
             </select>
           </td>
-          <td contenteditable="true" class="col-10-2" data-col="10-2">
-            <select id="my-list" name="my-list">
+          <td class="col-10-2" data-col="10-2">
+            <select class="my-list" name="my-list">
               <option value="">—</option>
               <option value="Pl">Pl</option>
               <option value="ф.к.">ф.к.</option>
               <option value="рентген">рентген</option>
             </select>
           </td>
-          <td contenteditable="true" class="col-10-3" data-col="10-3">
-            <select id="my-list" name="my-list">
+          <td class="col-10-3" data-col="10-3">
+            <select class="my-list" name="my-list">
               <option value="">—</option>
               <option value="Pl">Pl</option>
               <option value="ф.к.">ф.к.</option>
@@ -162,7 +162,7 @@
             </select>
           </td>
           <td contenteditable="true" class="col-11" data-col="11">
-            <select id="my-list" name="my-list">
+            <select class="my-list" name="my-list">
               <option value="value1">Без знеболювання</option>
               <option value="value2">Аплікаційне</option>
               <option value="value3">Інфільтраційне</option>
@@ -177,6 +177,9 @@
 
     <div class="footer">
       <p>Лікар _______________________ (підпис)</p>
+    </div>
+    <div class="controls">
+      <button id="openSummary">Відкрити зведений лист</button>
     </div>
     <script src="script.js"></script>
   </body>

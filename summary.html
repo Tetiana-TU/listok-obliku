@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Зведений лист</title>
+    <link rel="stylesheet" href="summary.css" />
+  </head>
+  <body>
+    <h3 style="text-align: center">Зведений щоденний облік роботи лікаря</h3>
+
+    <table class="summary-table">
+      <thead>
+        <tr id="headerRow">
+          <th class="vertical">Дата</th>
+          <th class="vertical">Фактично відпрацьовано годин</th>
+          <th class="vertical">Кількість відвідувань всього</th>
+          <th class="vertical">З них сільських жителів</th>
+          <th class="vertical">Усього сільських жителів</th>
+          <th class="vertical">У т.ч. дітей до 17 р.</th>
+          <th class="vertical">Невідкладна допомога</th>
+          <th class="vertical">Усього</th>
+          <th class="vertical">Постійні зуби</th>
+          <th class="vertical">У т.ч. у дітей</th>
+          <th class="vertical">Тимчасові зуби</th>
+          <th class="vertical">Пульпіт</th>
+          <th class="vertical">У т.ч. у дітей</th>
+          <th class="vertical">Періодонтит</th>
+          <th class="vertical">У т.ч. у дітей</th>
+          <th class="vertical">Пульпіт</th>
+          <th class="vertical">Періодонтит</th>
+          <th class="vertical">R-вітально хірургічно</th>
+          <th class="vertical">У т.ч. у дітей</th>
+          <th class="vertical">Pt за 1 відвідування</th>
+          <th class="vertical">У т.ч. у дітей</th>
+          <th class="vertical">Депульповано без карієсу</th>
+          <th class="vertical">Цементи</th>
+          <th class="vertical">Амальгами</th>
+          <th class="vertical">Хім. композити</th>
+          <th class="vertical">Світлополімери</th>
+          <th class="vertical">Знеболювання</th>
+          <th class="vertical">Хворих всього</th>
+          <th class="vertical">У т.ч. у дітей</th>
+          <th class="vertical">Зняття напластувань</th>
+          <th class="vertical">Медикаментозне лікування</th>
+          <th class="vertical">Кюретаж</th>
+          <th class="vertical">Операції</th>
+        </tr>
+        <tr id="colNumbers">
+          <th>(1)</th>
+          <th>(2)</th>
+          <th>(3)</th>
+          <th>(4)</th>
+          <th>(5)</th>
+          <th>(6)</th>
+          <th>(7)</th>
+          <th>(8)</th>
+          <th>(9)</th>
+          <th>(10)</th>
+          <th>(11)</th>
+          <th>(12)</th>
+          <th>(13)</th>
+          <th>(14)</th>
+          <th>(15)</th>
+          <th>(16)</th>
+          <th>(17)</th>
+          <th>(18)</th>
+          <th>(19)</th>
+          <th>(20)</th>
+          <th>(21)</th>
+          <th>(22)</th>
+          <th>(23)</th>
+          <th>(24)</th>
+          <th>(25)</th>
+          <th>(26)</th>
+          <th>(27)</th>
+          <th>(28)</th>
+          <th>(29)</th>
+          <th>(30)</th>
+          <th>(31)</th>
+          <th>(32)</th>
+          <th>(33)</th>
+        </tr>
+      </thead>
+      <tbody id="summaryBody"></tbody>
+    </table>
+
+    <div class="controls">
+      <button onclick="window.print()">Друк</button>
+    </div>
+    <script src="summary.js"></script>
+  </body>
+</html>
