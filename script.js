@@ -69,10 +69,6 @@ doctorSelect.addEventListener("change", () => {
 
 const tbody = document.getElementById("tableBody");
 
-// --------------------------
-// Допоміжні функції
-// --------------------------
-
 function getCurrentDate() {
   const now = new Date();
   return (
@@ -97,13 +93,16 @@ function saveAllRows() {
 
   rows.forEach((row) => {
     const dateCell = row.querySelector(".col-2");
-    const visitsCell = row.querySelector(".col-3");
+    const visitsCell = row.querySelector(".col-3"); // 3 колонка для прізвищ
 
     if (!dateCell) return;
 
+    const col9Select = row.querySelector(".col-9 select");
+
     dailyData.push({
       date: dateCell.textContent.trim(),
-      visits: visitsCell ? visitsCell.textContent.trim() : "1",
+      visits: visitsCell ? visitsCell.textContent.trim() : "",
+      diagnosis: col9Select ? col9Select.value : "",
     });
   });
 
@@ -169,6 +168,9 @@ tbody.addEventListener("change", (e) => {
     updateSum(row);
     saveAllRows(); // щоб зберегти вибрані значення
   }
+  if (e.target.matches(".col-9 select")) {
+    saveAllRows();
+  }
 });
 
 // Видалення рядка клавішею Delete
@@ -184,19 +186,19 @@ tbody.addEventListener("keydown", (e) => {
 });
 
 // Додавання нового рядка при заповненні колонки "Відвідування" (col-3)
-tbody.addEventListener("input", (e) => {
+tbody.addEventListener("keyup", (e) => {
+  const cell = e.target;
   const lastRow = tbody.lastElementChild;
 
   if (
-    e.target.closest("tr") === lastRow &&
-    e.target.classList.contains("col-3") &&
-    e.target.textContent.trim() !== ""
+    cell.classList.contains("col-3") &&
+    cell.textContent.trim() !== "" &&
+    cell.closest("tr") === lastRow
   ) {
-    saveAllRows();
     addNewRow();
-  } else {
-    saveAllRows();
   }
+
+  saveAllRows();
 });
 
 // --------------------------
@@ -217,26 +219,29 @@ function loadRows() {
   } else {
     dailyData.forEach((data) => {
       const newRow = templateRow.cloneNode(true);
+
       newRow.querySelector(".col-2").textContent = data.date;
+
       const visitsCell = newRow.querySelector(".col-3");
-      if (visitsCell) visitsCell.textContent = data.visits || "1";
+
+      if (visitsCell) visitsCell.textContent = data.visits || "";
+
+      const col9Select = newRow.querySelector(".col-9 select");
+      if (col9Select && data.diagnosis) {
+        col9Select.value = data.diagnosis;
+      }
+
       tbody.appendChild(newRow);
     });
   }
 
   updateRowNumbers();
   makeCellsEditable();
-  updateAllSums();
+  // updateAllSums();
 }
 
-// --------------------------
-// Кнопка "Відкрити зведений лист"
-// --------------------------
 document.getElementById("openSummary").addEventListener("click", () => {
   window.open("summary.html", "_blank");
 });
 
-// --------------------------
-// Запуск
-// --------------------------
 loadRows();

@@ -8,25 +8,47 @@
   <body>
     <div class="form-header">
       <div class="left">
-        <p>Міністерство охорони здоров’я України</p>
-        <p>__________________________________</p>
-        <p class="small">(найменування закладу охорони здоров’я)</p>
+        <div class="MOZ">
+          <p class="ministry">
+            Найменування міністерства, іншого органу виконавчої влади,
+            підприємства, установи,<br />
+            організації, до сфери управління якого належить заклад охорони
+            здоров"я <br />Міністерство охорони здоров"я України
+          </p>
+        </div>
+        <div>
+          <p class="fop">
+            Найменування та місцезнаходження (повна поштова адреса) закладу, де
+            заповнюється форма <br />
+            ФОП Романюк О.М., м.Житомир, вул. Перемоги, буд.99. <br />РНОКПП
+            2817906093
+          </p>
+        </div>
       </div>
 
       <div class="right">
-        <p><strong>Форма № 037/о</strong></p>
-        <p class="small">
-          Затверджено наказом МОЗ України<br />
-          від 14.02.2012 № 110
-        </p>
+        <div class="doctop">
+          <h3>Медична документація</h3>
+        </div>
+        <div class="forma">
+          <p>
+            Форма первинної облікової документації <br />
+            №037/0 <br />
+            <h3>Затверджено</h3>
+            Наказ МОЗ України <br />
+            від 14.02.2012р №110
+          </p>
+        </div>
       </div>
     </div>
-
-    <h2 class="title">
-      Листок<br />
-      щоденного обліку роботи лікаря-стоматолога (стоматологічної поліклінікі,
-      відділення, кабінету)
-    </h2>
+    <div class="zagolovok">
+      <h2 class="title">Листок</h2>
+      
+      <p>
+        щоденного обліку роботи лікаря-стоматолога (стоматологічної поліклінікі,
+        відділення, кабінету)
+      </p>
+    </div>
 
     <div class="period-row">
       <div class="period-left">
@@ -132,9 +154,10 @@
           </td>
           <td contenteditable="true" class="col-9" data-col="9">
             <select class="my-list" name="my-list">
-              <option value="value1">Пульпіт (C37)</option>
-              <option value="value2">Перідонтит (C45)</option>
-              <option value="value3">P33</option>
+              <option value="">—</option>
+              <option value="K04.0">Пульпіт (K04.0)</option>
+              <option value="K04.4">Періодонтит (K04.4)</option>
+              <option value="P33">P33</option>
             </select>
           </td>
           <td class="col-10-1" data-col="10-1">
@@ -175,10 +198,7 @@
       </tbody>
     </table>
 
-    <div class="footer">
-      <p>Лікар _______________________ (підпис)</p>
-    </div>
-    <div class="controls">
+       <div class="controls">
       <button id="openSummary">Відкрити зведений лист</button>
     </div>
     <script src="script.js"></script>

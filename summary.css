@@ -1,24 +1,61 @@
-.summary-table {
+body {
+  font-family: Arial, sans-serif;
+  background-image: url("images/3\ 1675427567_bogatyr-club-p-sero-goluboi-fon-odnotonnii-fon-pinterest-25.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 20px;
+}
+table {
+  background: transparent;
   border-collapse: collapse;
   width: 100%;
-  font-size: 11px;
 }
-
-.summary-table th,
-.summary-table td {
-  border: 1px solid #000;
+table,
+table th,
+table td {
+  border: 1px solid rgba(60, 60, 60, 0.8);
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 5px;
   text-align: center;
-  padding: 3px;
-  vertical-align: bottom;
-  overflow-wrap: break-word;
-  white-space: normal;
+  color: #000;
+  border: 1px solid #555;
+  box-shadow: inset 0 0 0 0.6px #222;
+  background: transparent;
 }
-
 .summary-table th.vertical {
   writing-mode: vertical-rl;
+  transform: rotate(180deg);
   white-space: nowrap;
-  height: auto;
-  width: auto;
-  padding: 10px 5px;
-  vertical-align: bottom;
+  vertical-align: middle;
+  padding: 2px 1px;
+}
+.controls {
+  text-align: right;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.controls button {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+@media print {
+  body {
+    background: none;
+  }
+
+  .summary-table th,
+  .summary-table td {
+    background: #fff;
+    border: 1px solid #000;
+    color: #000;
+  }
 }
