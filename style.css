@@ -2,7 +2,8 @@ body {
   font-family: Arial, sans-serif;
   size: 10px;
   padding: 20px 40px;
-  background-image: url("images/3\ 1675427567_bogatyr-club-p-sero-goluboi-fon-odnotonnii-fon-pinterest-25.jpg");
+  /* background-image: url("images/3\ 1675427567_bogatyr-club-p-sero-goluboi-fon-odnotonnii-fon-pinterest-25.jpg"); */
+  background-color: #b9c1cc;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -87,31 +88,31 @@ h2 {
   line-height: 1.4; /* міжрядковий інтервал */
 }
 table {
-  background: transparent;
+  /* background: transparent; */
   border-collapse: collapse;
   width: 100%;
 }
 table,
 table th,
 table td {
-  border: 1px solid rgba(60, 60, 60, 0.8);
+  border: 1px solid #b9c1cc;
   border-collapse: collapse;
 }
 th,
 td {
   padding: 5px;
   text-align: center;
-  color: #000;
+  /* color: #000; */
   border: 1px solid #555;
-  box-shadow: inset 0 0 0 0.6px #222;
+  /* box-shadow: inset 0 0 0 0.6px #222; */
   background: transparent;
 }
 
-/* th {
-  background: transparent;
-  border: 1px solid rgba(60, 60, 60, 0.8);
-  border-collapse: collapse;
-} */
+.shapka-table {
+  background-color: #555c66;
+  color: #ffff;
+}
+
 /* вертикальні заголовки */
 th.vertical {
   writing-mode: vertical-rl;
@@ -235,8 +236,12 @@ tbody td[contenteditable="true"] {
   vertical-align: middle;
 }
 tbody td[contenteditable="true"]:focus {
-  outline: 2px solid #4a90e2;
-  background-color: #eef5ff;
+  outline: 2px solid #aaa;
+  background-color: #1111;
+}
+.table-body {
+  background-color: #000;
+  color: #ffff;
 }
 .dropdown {
   position: absolute;
@@ -271,4 +276,8 @@ tbody td[contenteditable="true"]:focus {
   font-size: 14px;
   cursor: pointer;
   background-color: transparent;
+}
+.my-list {
+  background-color: #111;
+  color: #ffff;
 }

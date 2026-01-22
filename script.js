@@ -87,43 +87,75 @@ function updateRowNumbers() {
 }
 
 // Зберігає всі рядки у localStorage
+// function saveAllRows() {
+//   const rows = tbody.querySelectorAll("tr");
+//   const dailyData = [];
+
+//   rows.forEach((row) => {
+//     const dateCell = row.querySelector(".col-2");
+//     const visitsCell = row.querySelector(".col-3"); // 3 колонка для прізвищ
+
+//     if (!dateCell) return;
+
+//     const col9Select = row.querySelector(".col-9 select");
+
+//     dailyData.push({
+//       date: dateCell.textContent.trim(),
+//       visits: visitsCell ? visitsCell.textContent.trim() : "",
+//       diagnosis: col9Select ? col9Select.value : "",
+//     });
+//   });
+
+//   localStorage.setItem("dailyData", JSON.stringify(dailyData));
+// }
+
 function saveAllRows() {
   const rows = tbody.querySelectorAll("tr");
-  const dailyData = [];
+  const data = [];
 
   rows.forEach((row) => {
-    const dateCell = row.querySelector(".col-2");
-    const visitsCell = row.querySelector(".col-3"); // 3 колонка для прізвищ
+    const rowData = {};
 
-    if (!dateCell) return;
+    row.querySelectorAll("td").forEach((td) => {
+      const col = td.dataset.col;
+      if (!col) return;
 
-    const col9Select = row.querySelector(".col-9 select");
-
-    dailyData.push({
-      date: dateCell.textContent.trim(),
-      visits: visitsCell ? visitsCell.textContent.trim() : "",
-      diagnosis: col9Select ? col9Select.value : "",
+      const select = td.querySelector("select");
+      rowData[col] = select ? select.value : td.textContent.trim();
     });
+
+    data.push(rowData);
   });
 
-  localStorage.setItem("dailyData", JSON.stringify(dailyData));
+  localStorage.setItem("dailyData", JSON.stringify(data));
 }
 
 // Додає новий рядок на основі першого рядка-шаблону
 function addNewRow() {
-  const templateRow = tbody.querySelector("tr");
-  if (!templateRow) return;
+  const rows = tbody.querySelectorAll("tr");
+  const lastRow = rows[rows.length - 1];
+  if (!lastRow) return;
 
-  const newRow = templateRow.cloneNode(true);
+  const newRow = lastRow.cloneNode(true);
 
   newRow.querySelectorAll("td").forEach((td) => {
-    if (!td.classList.contains("col-2") && !td.querySelector("select")) {
+    const col = td.dataset.col;
+    const select = td.querySelector("select");
+
+    // 👉 ЦІ КОЛОНКИ ЗБЕРІГАЮТЬ ЗНАЧЕННЯ
+    if (["5", "7", "11"].includes(col)) {
+      return;
+    }
+
+    // ❌ решта — очищаємо
+    if (select) {
+      select.selectedIndex = 0;
+    } else {
       td.textContent = "";
     }
-    if (td.querySelector("select")) td.querySelector("select").value = "";
   });
 
-  // Встановлюємо дату
+  // дата — нова
   const dateCell = newRow.querySelector(".col-2");
   if (dateCell) dateCell.textContent = getCurrentDate();
 
@@ -206,39 +238,44 @@ tbody.addEventListener("keyup", (e) => {
 // --------------------------
 
 function loadRows() {
-  const dailyData = JSON.parse(localStorage.getItem("dailyData")) || [];
-  const templateRow = tbody.querySelector("tr");
+  const data = JSON.parse(localStorage.getItem("dailyData")) || [];
 
-  // Якщо немає даних – залишаємо шаблонний рядок
+  // беремо шаблон ДО очищення
+  const templateRow = tbody.querySelector("tr");
   if (!templateRow) return;
+
   tbody.innerHTML = "";
 
-  if (dailyData.length === 0) {
-    templateRow.querySelector(".col-2").textContent = getCurrentDate();
-    tbody.appendChild(templateRow);
+  if (data.length === 0) {
+    const row = templateRow.cloneNode(true);
+    row.querySelector(".col-2").textContent = getCurrentDate();
+    tbody.appendChild(row);
   } else {
-    dailyData.forEach((data) => {
+    data.forEach((rowData) => {
       const newRow = templateRow.cloneNode(true);
 
-      newRow.querySelector(".col-2").textContent = data.date;
+      newRow.querySelectorAll("td").forEach((td) => {
+        const col = td.dataset.col;
+        if (!col || rowData[col] === undefined) return;
 
-      const visitsCell = newRow.querySelector(".col-3");
-
-      if (visitsCell) visitsCell.textContent = data.visits || "";
-
-      const col9Select = newRow.querySelector(".col-9 select");
-      if (col9Select && data.diagnosis) {
-        col9Select.value = data.diagnosis;
-      }
+        const select = td.querySelector("select");
+        if (select) {
+          select.value = rowData[col];
+        } else {
+          td.textContent = rowData[col];
+        }
+      });
 
       tbody.appendChild(newRow);
+      updateSum(newRow);
     });
   }
 
   updateRowNumbers();
   makeCellsEditable();
-  // updateAllSums();
 }
+
+tbody.addEventListener("input", saveAllRows);
 
 document.getElementById("openSummary").addEventListener("click", () => {
   window.open("summary.html", "_blank");

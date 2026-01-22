@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="form-header">
+    <!-- <div class="form-header">
       <div class="left">
         <div class="MOZ">
           <p class="ministry">
@@ -40,10 +40,10 @@
           </p>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="zagolovok">
       <h2 class="title">Листок</h2>
-      
+
       <p>
         щоденного обліку роботи лікаря-стоматолога (стоматологічної поліклінікі,
         відділення, кабінету)
@@ -65,7 +65,7 @@
     </div>
 
     <table class="med-table">
-      <thead>
+      <thead class="shapka-table">
         <!-- ПЕРШИЙ РЯДОК ЗАГОЛОВКІВ -->
         <tr>
           <th rowspan="2">Номер п/п</th>
@@ -107,9 +107,9 @@
 
         <!-- ДРУГИЙ РЯДОК ПІДКОЛОНОК -->
         <tr>
-          <th>Процедура 1</th>
-          <th>Процедура 2</th>
-          <th>Процедура 3</th>
+          <th>Процедура <br />1</th>
+          <th>Процедура <br />2</th>
+          <th>Процедура <br />3</th>
         </tr>
         <!-- РЯДОК НУМЕРАЦІЇ ГРАФ -->
         <tr class="col-numbers">
@@ -130,7 +130,7 @@
         </tr>
       </thead>
 
-      <tbody id="tableBody">
+      <tbody id="tableBody" class="table-body">
         <!-- Дані заповнюються -->
         <tr class="input-row">
           <td contenteditable="true" class="col-1" data-col="1"></td>
@@ -144,7 +144,12 @@
             </select>
           </td>
           <td contenteditable="true" class="col-6" data-col="6"></td>
-          <td contenteditable="true" class="col-7" data-col="7"></td>
+          <td contenteditable="true" class="col-7" data-col="7">
+            <select class="my-list" name="my-list">
+              <option value="місто" selected>м</option>
+              <option value="село">с</option>
+            </select>
+          </td>
           <td contenteditable="true" class="col-8" data-col="8">
             <!-- <select id="my-list" name="my-list">
               <option value="value1">Значення 1</option>
@@ -155,9 +160,11 @@
           <td contenteditable="true" class="col-9" data-col="9">
             <select class="my-list" name="my-list">
               <option value="">—</option>
+              <option value="K02">Карієс зубів (K02)</option>
               <option value="K04.0">Пульпіт (K04.0)</option>
               <option value="K04.4">Періодонтит (K04.4)</option>
-              <option value="P33">P33</option>
+              <option value="Z01.2">Профілактичний огляд (Z01.2)</option>
+              <option value="НД">Невідкладна допомога</option>
             </select>
           </td>
           <td class="col-10-1" data-col="10-1">
@@ -198,7 +205,7 @@
       </tbody>
     </table>
 
-       <div class="controls">
+    <div class="controls">
       <button id="openSummary">Відкрити зведений лист</button>
     </div>
     <script src="script.js"></script>

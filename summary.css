@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-image: url("images/3\ 1675427567_bogatyr-club-p-sero-goluboi-fon-odnotonnii-fon-pinterest-25.jpg");
+  background-color: #b9c1cc;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -12,6 +12,7 @@ table {
   background: transparent;
   border-collapse: collapse;
   width: 100%;
+  font-size: 12px;
 }
 table,
 table th,
@@ -25,15 +26,21 @@ td {
   text-align: center;
   color: #000;
   border: 1px solid #555;
-  box-shadow: inset 0 0 0 0.6px #222;
   background: transparent;
+}
+.summary-table {
+  table-layout: fixed;
 }
 .summary-table th.vertical {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  white-space: nowrap;
-  vertical-align: middle;
-  padding: 2px 1px;
+  padding: 0;
+  height: 150px;
+  vertical-align: bottom;
+  font-size: 12px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .controls {
   text-align: right;
@@ -46,7 +53,36 @@ td {
   cursor: pointer;
   background-color: transparent;
 }
-
+.signature-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 100px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+.column {
+  width: 45%;
+}
+.label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+.sub-label {
+  font-size: 0.8em;
+  text-align: center;
+  border-top: 1px solid #000;
+  margin-top: 2px;
+}
+.date-section {
+  margin-top: 20px;
+}
+.underline {
+  display: inline-block;
+  min-width: 200px;
+  border-bottom: 1px solid #000;
+  height: 20px;
+}
 @media print {
   body {
     background: none;
