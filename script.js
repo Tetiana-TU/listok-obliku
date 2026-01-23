@@ -86,29 +86,6 @@ function updateRowNumbers() {
   });
 }
 
-// Зберігає всі рядки у localStorage
-// function saveAllRows() {
-//   const rows = tbody.querySelectorAll("tr");
-//   const dailyData = [];
-
-//   rows.forEach((row) => {
-//     const dateCell = row.querySelector(".col-2");
-//     const visitsCell = row.querySelector(".col-3"); // 3 колонка для прізвищ
-
-//     if (!dateCell) return;
-
-//     const col9Select = row.querySelector(".col-9 select");
-
-//     dailyData.push({
-//       date: dateCell.textContent.trim(),
-//       visits: visitsCell ? visitsCell.textContent.trim() : "",
-//       diagnosis: col9Select ? col9Select.value : "",
-//     });
-//   });
-
-//   localStorage.setItem("dailyData", JSON.stringify(dailyData));
-// }
-
 function saveAllRows() {
   const rows = tbody.querySelectorAll("tr");
   const data = [];

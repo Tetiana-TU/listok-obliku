@@ -28,19 +28,29 @@ td {
   border: 1px solid #555;
   background: transparent;
 }
+
 .summary-table {
   table-layout: fixed;
+}
+.summary-table thead tr {
+  height: auto;
+}
+.summary-table th {
+  padding: 1px;
 }
 .summary-table th.vertical {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
+  position: relative;
   padding: 0;
-  height: 150px;
-  vertical-align: bottom;
-  font-size: 12px;
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  min-height: 200px;
+}
+.summary-table th.vertical span {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* word-break: break-word; */
 }
 .controls {
   text-align: right;
