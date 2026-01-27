@@ -145,6 +145,7 @@ table.med-table {
   width: auto;
   table-layout: auto;
 }
+
 input,
 select {
   width: 100%;
@@ -280,4 +281,53 @@ tbody td[contenteditable="true"]:focus {
 .my-list {
   background-color: #111;
   color: #ffff;
+}
+/* =========================
+   СТИЛІ ДЛЯ ДРУКУ
+========================= */
+@media print {
+  body {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  /* Ховаємо все зайве */
+  .controls,
+  .no-print,
+  button {
+    display: none !important;
+  }
+
+  /* Таблиця */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid black;
+    padding: 3px;
+    text-align: center;
+  }
+
+  /* Заголовки не розривати */
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Вертикальні заголовки */
+  .vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* Забрати рамки input/select */
+  td[contenteditable="true"] {
+    outline: none;
+  }
 }

@@ -139,8 +139,8 @@
           <td contenteditable="true" class="col-4" data-col="4"></td>
           <td contenteditable="true" class="col-5" data-col="5">
             <select class="my-list" name="my-list">
-              <option value="value1">I</option>
-              <option value="value2">II</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
             </select>
           </td>
           <td contenteditable="true" class="col-6" data-col="6"></td>
@@ -160,9 +160,24 @@
           <td contenteditable="true" class="col-9" data-col="9">
             <select class="my-list" name="my-list">
               <option value="">—</option>
-              <option value="K02">Карієс зубів (K02)</option>
-              <option value="K04.0">Пульпіт (K04.0)</option>
-              <option value="K04.4">Періодонтит (K04.4)</option>
+              <option value="K02_Permanent">
+                Карієс зубів (K02) Постійні зуби
+              </option>
+              <option value="K02_Temporary">
+                Карієс зубів (K02) Тимчасові зуби
+              </option>
+              <option value="K04.0_Permanent">
+                Пульпіт (K04.0) Постійні зуби
+              </option>
+              <option value="K04.0_Temporary">
+                Пульпіт (K04.0) Тимчасові зуби
+              </option>
+              <option value="K04.4_Permanent">
+                Періодонтит (K04.4) Постійні зуби
+              </option>
+              <option value="K04.4_Temporary">
+                Періодонтит (K04.4) Тимчасові зуби
+              </option>
               <option value="Z01.2">Профілактичний огляд (Z01.2)</option>
               <option value="НД">Невідкладна допомога</option>
             </select>
@@ -170,32 +185,68 @@
           <td class="col-10-1" data-col="10-1">
             <select class="my-list" name="my-list">
               <option value="">—</option>
-              <option value="Pl">Pl</option>
+              <option value="первинний_огляд">Первинний огляд</option>
+              <option value="PlC">PlC</option>
+              <option value="PlAm">PlAm</option>
+              <option value="PlCC">PlCC</option>
+              <option value="PlLC">PlLC</option>
               <option value="ф.к.">ф.к.</option>
+              <option value="анестезія">анестезія</option>
+              <option value="зняття_пломби">Зняття пломби</option>
+              <option value="видалення_зуба_просте">
+                Видалення зуба просте
+              </option>
+              <option value="видалення_зуба_складне">
+                Видалення зуба складне
+              </option>
               <option value="рентген">рентген</option>
             </select>
           </td>
           <td class="col-10-2" data-col="10-2">
             <select class="my-list" name="my-list">
               <option value="">—</option>
-              <option value="Pl">Pl</option>
+              <option value="первинний_огляд">Первинний огляд</option>
+              <option value="PlC">PlC</option>
+              <option value="PlAm">PlAm</option>
+              <option value="PlCC">PlCC</option>
+              <option value="PlLC">PlLC</option>
               <option value="ф.к.">ф.к.</option>
+              <option value="анестезія">анестезія</option>
+              <option value="зняття_пломби">Зняття пломби</option>
+              <option value="видалення_зуба_просте">
+                Видалення зуба просте
+              </option>
+              <option value="видалення_зуба_складне">
+                Видалення зуба складне
+              </option>
               <option value="рентген">рентген</option>
             </select>
           </td>
           <td class="col-10-3" data-col="10-3">
             <select class="my-list" name="my-list">
               <option value="">—</option>
-              <option value="Pl">Pl</option>
+              <option value="первинний_огляд">Первинний огляд</option>
+              <option value="PlC">PlC</option>
+              <option value="PlAm">PlAm</option>
+              <option value="PlCC">PlCC</option>
+              <option value="PlLC">PlLC</option>
               <option value="ф.к.">ф.к.</option>
+              <option value="анестезія">анестезія</option>
+              <option value="зняття_пломби">Зняття пломби</option>
+              <option value="видалення_зуба_просте">
+                Видалення зуба просте
+              </option>
+              <option value="видалення_зуба_складне">
+                Видалення зуба складне
+              </option>
               <option value="рентген">рентген</option>
             </select>
           </td>
           <td contenteditable="true" class="col-11" data-col="11">
             <select class="my-list" name="my-list">
               <option value="value1">Без знеболювання</option>
-              <option value="value2">Аплікаційне</option>
-              <option value="value3">Інфільтраційне</option>
+              <option value="value2">Місцеве</option>
+              <option value="value3">Загальне</option>
             </select>
           </td>
           <td contenteditable="true" class="col-12" data-col="12"></td>
@@ -207,6 +258,9 @@
 
     <div class="controls">
       <button id="openSummary">Відкрити зведений лист</button>
+    </div>
+    <div class="controls no-print">
+      <button id="printPage">Роздрукувати лист обліку</button>
     </div>
     <script src="script.js"></script>
   </body>

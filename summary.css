@@ -8,36 +8,49 @@ body {
   margin: 0;
   padding: 20px;
 }
+
 table {
-  background: transparent;
   border-collapse: collapse;
   width: 100%;
   font-size: 12px;
 }
+
 table,
 table th,
 table td {
-  border: 1px solid rgba(60, 60, 60, 0.8);
-  border-collapse: collapse;
-}
-th,
-td {
-  padding: 5px;
-  text-align: center;
-  color: #000;
   border: 1px solid #555;
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
   background: transparent;
+  color: #000;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .summary-table {
-  table-layout: fixed;
+  width: 100%;
+  margin-bottom: 50px;
 }
-.summary-table thead tr {
-  height: auto;
+
+.summary-table col:first-child {
+  width: auto; /* Перша колонка під дату не розтягується */
 }
-.summary-table th {
-  padding: 1px;
+
+.summary-table td:first-child {
+  white-space: nowrap; /* Дата не переноситься */
+  width: 1%; /* Підлаштовує під вміст */
 }
+.summary-table td:not(:first-child),
+.summary-table th:not(:first-child) {
+  width: 40px; /* Фіксована ширина всіх інших колонок */
+}
+.summary-table th,
+.summary-table td {
+  width: 1fr; /* Всі інші клітинки однакові */
+}
+
 .summary-table th.vertical {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -45,24 +58,27 @@ td {
   padding: 0;
   min-height: 200px;
 }
+
 .summary-table th.vertical span {
   position: absolute;
   top: 4px;
   left: 50%;
   transform: translateX(-50%);
-  /* word-break: break-word; */
 }
+
 .controls {
   text-align: right;
   margin-top: 20px;
   margin-bottom: 40px;
 }
+
 .controls button {
   padding: 8px 16px;
   font-size: 14px;
   cursor: pointer;
   background-color: transparent;
 }
+
 .signature-container {
   display: flex;
   justify-content: space-between;
@@ -70,29 +86,35 @@ td {
   margin-bottom: 30px;
   width: 100%;
 }
+
 .column {
   width: 45%;
 }
+
 .label {
   font-weight: bold;
   display: block;
   margin-bottom: 5px;
 }
+
 .sub-label {
   font-size: 0.8em;
   text-align: center;
   border-top: 1px solid #000;
   margin-top: 2px;
 }
+
 .date-section {
   margin-top: 20px;
 }
+
 .underline {
   display: inline-block;
   min-width: 200px;
   border-bottom: 1px solid #000;
   height: 20px;
 }
+
 @media print {
   body {
     background: none;
@@ -103,5 +125,10 @@ td {
     background: #fff;
     border: 1px solid #000;
     color: #000;
+  }
+
+  .new-page {
+    break-before: page;
+    page-break-before: always;
   }
 }

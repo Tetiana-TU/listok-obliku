@@ -152,26 +152,50 @@ function makeCellsEditable() {
 // Події
 // --------------------------
 // Мапа балів для select
-const pointsMap = {
-  Pl: 1,
+// Бали за процедури (10-1, 10-2, 10-3)
+const procedurePoints = {
+  первинний_огляд: 0.5,
+  PlC: 1,
+  PlAm: 1,
+  PlCC: 1,
+  PlLC: 1,
   "ф.к.": 1,
+  анестезія: 0.5,
+  зняття_пломби: 1,
+  видалення_зуба_просте: 0.75,
+  видалення_зуба_складне: 1.5,
   рентген: 1,
 };
+
+// Бали за знеболювання (11 колонка)
+const anesthesiaPoints = {
+  value1: 0, // Без знеболювання
+  value2: 0.5, // Місцеве
+  value3: 1, // Загальне
+};
 function updateSum(row) {
-  const values = [
+  const procedures = [
     row.querySelector(".col-10-1 select")?.value,
     row.querySelector(".col-10-2 select")?.value,
     row.querySelector(".col-10-3 select")?.value,
   ];
 
-  const sum = values.reduce((acc, val) => acc + (pointsMap[val] || 0), 0);
+  let procedureSum = procedures.reduce(
+    (acc, val) => acc + (procedurePoints[val] || 0),
+    0,
+  );
+  const anesthesiaValue = row.querySelector(".col-11 select")?.value;
+  let anesthesiaSum = anesthesiaPoints[anesthesiaValue] || 0;
 
+  // загальна сума в колонку 14
   const sumCell = row.querySelector(".col-14");
-  if (sumCell) sumCell.textContent = sum || "";
+  if (sumCell) sumCell.textContent = procedureSum + anesthesiaSum || "";
 }
 tbody.addEventListener("change", (e) => {
   if (
-    e.target.matches(".col-10-1 select, .col-10-2 select, .col-10-3 select")
+    e.target.matches(
+      ".col-10-1 select, .col-10-2 select, .col-10-3 select, .col-11 select",
+    )
   ) {
     const row = e.target.closest("tr");
     updateSum(row);
@@ -259,3 +283,7 @@ document.getElementById("openSummary").addEventListener("click", () => {
 });
 
 loadRows();
+
+document.getElementById("printPage").addEventListener("click", () => {
+  window.print();
+});

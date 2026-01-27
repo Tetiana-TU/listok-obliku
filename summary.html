@@ -8,7 +8,13 @@
   <body>
     <h3 style="text-align: center">Зведений щоденний облік роботи лікаря</h3>
 
-    <table class="summary-table">
+    <table class="summary-table part-1">
+      <colgroup>
+        <col />
+        <!-- перша колонка (дата) -->
+        <col span="35" style="width: 30px" />
+        <!-- решта колонок фіксовані -->
+      </colgroup>
       <thead>
         <!-- 1 рівень -->
         <tr>
@@ -32,7 +38,7 @@
             <span>Кількість знеболювань (місцеве/загальне)</span>
           </th>
           <th colspan="9">Проведено курс лікування захворювань</th>
-          <th colspan="7">Видалено зубів</th>
+          <!-- <th colspan="7">Видалено зубів</th>
           <th colspan="5">Зроблено операцій</th>
           <th rowspan="4" class="vertical">
             <span
@@ -46,7 +52,7 @@
           <th colspan="5">Профілактичні заходи</th>
           <th rowspan="4" class="vertical">
             <span>Відпрацьовано умовних одиниць працеємкості (УОП)</span>
-          </th>
+          </th> -->
         </tr>
 
         <!-- 2 рівень -->
@@ -74,7 +80,8 @@
           <th rowspan="3" class="vertical">
             <span>У тому числі у дітей до 17 років включно</span>
           </th>
-          <th rowspan="3" class="vertical"><span>усього</span></th>
+
+          <!--<th rowspan="3" class="vertical"><span>усього</span></th>
 
           <th colspan="2">постійних у дорослих з приводу</th>
           <th colspan="4">у дітей до 17 років включно</th>
@@ -105,7 +112,7 @@
           <th rowspan="3" class="vertical">
             <span>ремінералізуюча терапія</span>
           </th>
-          <th rowspan="3" class="vertical"><span>герметизація фісур</span></th>
+          <th rowspan="3" class="vertical"><span>герметизація фісур</span></th> -->
         </tr>
 
         <!-- 3 рівень -->
@@ -137,7 +144,7 @@
           <th rowspan="2" class="vertical">
             <span>тимчасове шинування зубів</span>
           </th>
-          <th rowspan="2" class="vertical">
+          <!-- <th rowspan="2" class="vertical">
             <span>ускладненого карієсу</span>
           </th>
           <th rowspan="2" class="vertical"><span>пародонтиту</span></th>
@@ -156,7 +163,7 @@
           <th rowspan="2" class="vertical">
             <span>потребували санації з тих, що оглянуті</span>
           </th>
-          <th rowspan="2" class="vertical"><span>сановано, усього</span></th>
+          <th rowspan="2" class="vertical"><span>сановано, усього</span></th> -->
         </tr>
 
         <!-- 4 рівень -->
@@ -189,15 +196,15 @@
           <th class="vertical"><span>кюретаж</span></th>
           <th class="vertical"><span>клаптева та інші операції</span></th>
 
-          <th class="vertical"><span>з приводу ускладненого карієсу</span></th>
+          <!-- <th class="vertical"><span>з приводу ускладненого карієсу</span></th>
           <th class="vertical"><span>з ортодонтичною метою</span></th>
           <th class="vertical"><span>з приводу ускладненого карієсу</span></th>
           <th class="vertical">
             <span>у зв'язку з фізіологічною зміною</span>
-          </th>
+          </th> -->
         </tr>
 
-        <tr id="colNumbers">
+        <tr class="col-numbers">
           <th>(1)</th>
           <th>(2)</th>
           <th>(3)</th>
@@ -234,7 +241,7 @@
           <th>(34)</th>
           <th>(35)</th>
           <th>(36)</th>
-          <th>(37)</th>
+          <!-- <th>(37)</th>
           <th>(38)</th>
           <th>(39)</th>
           <th>(40)</th>
@@ -259,12 +266,281 @@
           <th>(59)</th>
           <th>(60)</th>
           <th>(61)</th>
-          <th>(62)</th>
+          <th>(62)</th> -->
         </tr>
       </thead>
-      <tbody id="summaryBody"></tbody>
+      <tbody id="summaryBody1"></tbody>
     </table>
+    <div class="new-page">
+      <table class="summary-table part-2">
+        <colgroup>
+          <col span="26" style="width: 30px" />
+        </colgroup>
+        <thead>
+          <!-- 1 рівень -->
+          <tr>
+            <!-- <th rowspan="4" class="vertical"><span>Дата</span></th>
+          <th rowspan="4" class="vertical">
+            <span>Фактично відпрацьовано годин</span>
+          </th>
+          <th rowspan="4" class="vertical">
+            <span>Кількість відвідувань, усього</span>
+          </th>
+          <th rowspan="4" class="vertical">
+            <span>З них сільських жителів</span>
+          </th>
+          <th colspan="2">Кількість первинних відвідувань (із графи 3)</th>
+          <th rowspan="4" class="vertical">
+            <span>Отримали невідкладну допомогу</span>
+          </th>
+          <th colspan="15">Запломбовано зубів</th>
+          <th colspan="4">Зроблено пломб з:</th>
+          <th rowspan="4" class="vertical">
+            <span>Кількість знеболювань (місцеве/загальне)</span>
+          </th>
+          <th colspan="9">Проведено курс лікування захворювань</th> -->
+            <th colspan="7">Видалено зубів</th>
+            <th colspan="5">Зроблено операцій</th>
+            <th rowspan="4" class="vertical">
+              <span
+                >Усього сановано в порядку планової роботи та за
+                зверненням</span
+              >
+            </th>
+            <th rowspan="4" class="vertical">
+              <span>У тому числі у дітей до 17 років включно</span>
+            </th>
+            <th colspan="6">Планова санація</th>
+            <th colspan="5">Профілактичні заходи</th>
+            <th rowspan="4" class="vertical">
+              <span>Відпрацьовано умовних одиниць працеємкості (УОП)</span>
+            </th>
+          </tr>
 
+          <!-- 2 рівень -->
+
+          <tr>
+            <!-- <th rowspan="3" class="vertical">
+            <span>усього/у тому числі сільських жителів</span>
+          </th>
+          <th rowspan="3" class="vertical">
+            <span>з них дітей до 17 років включно</span>
+          </th>
+          <th rowspan="3" class="vertical">
+            <span>усього</span>
+          </th>
+          <th colspan="3">карієс</th>
+          <th colspan="11">ускладенний карієс</th>
+          <th rowspan="3" class="vertical"><span>цементів</span></th>
+          <th rowspan="3" class="vertical"><span>амальгам</span></th>
+          <th rowspan="3" class="vertical"><span>хімічних композитів</span></th>
+          <th rowspan="3" class="vertical"><span>світлополімерів</span></th>
+          <th colspan="7">пародонту</th>
+          <th rowspan="3" class="vertical">
+            <span>слизової оболонки порожнини рота, усього</span>
+          </th>
+          <th rowspan="3" class="vertical">
+            <span>У тому числі у дітей до 17 років включно</span>
+          </th> -->
+            <th rowspan="3" class="vertical"><span>усього</span></th>
+
+            <th colspan="2">постійних у дорослих з приводу</th>
+            <th colspan="4">у дітей до 17 років включно</th>
+            <th rowspan="3" class="vertical"><span>усього</span></th>
+            <th rowspan="3" class="vertical">
+              <span>гострі запальні процеси</span>
+            </th>
+            <th rowspan="3" class="vertical">
+              <span>пухлини та пухлиноподібні утворення</span>
+            </th>
+            <th rowspan="3" class="vertical"><span>зубні імплантати</span></th>
+            <th rowspan="3" class="vertical"><span>інші</span></th>
+            <th colspan="3">у дорослих</th>
+            <th colspan="3">у дітей до 17 років включно</th>
+            <th rowspan="3" class="vertical">
+              <span
+                >гігієнічне навчання та виховання, індивідуальний вибір засобів
+                профілактики</span
+              >
+            </th>
+            <th rowspan="3" class="vertical">
+              <span>
+                навчання догляду за порожниною рота, контроль та корекція
+                навичок</span
+              >
+            </th>
+            <th rowspan="3" class="vertical">
+              <span>професійна гігієна</span>
+            </th>
+            <th rowspan="3" class="vertical">
+              <span>ремінералізуюча терапія</span>
+            </th>
+            <th rowspan="3" class="vertical">
+              <span>герметизація фісур</span>
+            </th>
+          </tr>
+
+          <!-- 3 рівень -->
+          <tr>
+            <!-- <th rowspan="2" class="vertical">
+            <span>постійні зуби, усього</span>
+          </th>
+          <th rowspan="2" class="vertical">
+            <span>У тому числі у дітей до 17 років включно</span>
+          </th>
+          <th rowspan="2" class="vertical"><span>тимчасові зуби</span></th>
+          <th colspan="4">постійні зуби</th>
+          <th colspan="2">тимчасові зуби</th>
+          <th colspan="5">у тому числі вилікувано</th>
+
+          <th rowspan="2" class="vertical">
+            <span>кількість хворих, усього</span>
+          </th>
+          <th rowspan="2" class="vertical">
+            <span> У тому числі у дітей до 17 років включно</span>
+          </th>
+          <th rowspan="2" class="vertical">
+            <span>повне зняття зубних напластувань</span>
+          </th>
+          <th rowspan="2" class="vertical">
+            <span>медикаментозне лікування</span>
+          </th>
+          <th colspan="2">хірургічне лікування</th>
+          <th rowspan="2" class="vertical">
+            <span>тимчасове шинування зубів</span>
+          </th> -->
+            <th rowspan="2" class="vertical">
+              <span>ускладненого карієсу</span>
+            </th>
+            <th rowspan="2" class="vertical"><span>пародонтиту</span></th>
+            <th colspan="2">постійних</th>
+            <th colspan="2">тимчасових</th>
+            <th rowspan="2" class="vertical">
+              <span>оглянуто в порядку планової санації</span>
+            </th>
+            <th rowspan="2" class="vertical">
+              <span>потребували санації з тих, що оглянуті</span>
+            </th>
+            <th rowspan="2" class="vertical"><span>сановано, усього</span></th>
+            <th rowspan="2" class="vertical">
+              <span>оглянуто в порядку планової санації</span>
+            </th>
+            <th rowspan="2" class="vertical">
+              <span>потребували санації з тих, що оглянуті</span>
+            </th>
+            <th rowspan="2" class="vertical"><span>сановано, усього</span></th>
+          </tr>
+
+          <!-- 4 рівень -->
+          <tr>
+            <!-- <th class="vertical"><span>пульпіт, усього</span></th>
+          <th class="vertical">
+            <span>У тому числі у дітей до 17 років включно</span>
+          </th>
+          <th class="vertical"><span>періодонтит, усього</span></th>
+          <th class="vertical">
+            <span>У тому числі у дітей до 17 років включно</span>
+          </th>
+          <th class="vertical"><span>пульпіт</span></th>
+          <th class="vertical"><span>періодонтит</span></th>
+          <th class="vertical">
+            <span>Р-вітально хірургічно за 1 відвідування, усього</span>
+          </th>
+          <th class="vertical">
+            <span>У тому числі у дітей до 17 років включно</span>
+          </th>
+          <th class="vertical">
+            <span>Pt за 1 відвідування, усього</span>
+          </th>
+          <th class="vertical">
+            <span>У тому числі у дітей до 17 років включно</span>
+          </th>
+          <th class="vertical">
+            <span>депульповано зубів без ураження карієсом</span>
+          </th>
+          <th class="vertical"><span>кюретаж</span></th>
+          <th class="vertical"><span>клаптева та інші операції</span></th> -->
+
+            <th class="vertical">
+              <span>з приводу ускладненого карієсу</span>
+            </th>
+            <th class="vertical"><span>з ортодонтичною метою</span></th>
+            <th class="vertical">
+              <span>з приводу ускладненого карієсу</span>
+            </th>
+            <th class="vertical">
+              <span>у зв'язку з фізіологічною зміною</span>
+            </th>
+          </tr>
+
+          <tr class="col-numbers">
+            <!-- <th>(1)</th>
+          <th>(2)</th>
+          <th>(3)</th>
+          <th>(4)</th>
+          <th>(5)</th>
+          <th>(6)</th>
+          <th>(7)</th>
+          <th>(8)</th>
+          <th>(9)</th>
+          <th>(10)</th>
+          <th>(11)</th>
+          <th>(12)</th>
+          <th>(13)</th>
+          <th>(14)</th>
+          <th>(15)</th>
+          <th>(16)</th>
+          <th>(17)</th>
+          <th>(18)</th>
+          <th>(19)</th>
+          <th>(20)</th>
+          <th>(21)</th>
+          <th>(22)</th>
+          <th>(23)</th>
+          <th>(24)</th>
+          <th>(25)</th>
+          <th>(26)</th>
+          <th>(27)</th>
+          <th>(28)</th>
+          <th>(29)</th>
+          <th>(30)</th>
+          <th>(31)</th>
+          <th>(32)</th>
+          <th>(33)</th>
+          <th>(34)</th>
+          <th>(35)</th>
+          <th>(36)</th> -->
+            <th>(37)</th>
+            <th>(38)</th>
+            <th>(39)</th>
+            <th>(40)</th>
+            <th>(41)</th>
+            <th>(42)</th>
+            <th>(43)</th>
+            <th>(44)</th>
+            <th>(45)</th>
+            <th>(46)</th>
+            <th>(47)</th>
+            <th>(48)</th>
+            <th>(49)</th>
+            <th>(50)</th>
+            <th>(51)</th>
+            <th>(52)</th>
+            <th>(53)</th>
+            <th>(54)</th>
+            <th>(55)</th>
+            <th>(56)</th>
+            <th>(57)</th>
+            <th>(58)</th>
+            <th>(59)</th>
+            <th>(60)</th>
+            <th>(61)</th>
+            <th>(62)</th>
+          </tr>
+        </thead>
+        <tbody id="summaryBody2"></tbody>
+      </table>
+    </div>
     <div class="signature-container">
       <!-- Блок Керівника -->
       <div class="column">
