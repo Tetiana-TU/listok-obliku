@@ -8,6 +8,12 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
+  max-width: 100%;
+}
+table.med-table {
+  width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
 }
 
 h2 {
@@ -107,7 +113,10 @@ td {
   /* box-shadow: inset 0 0 0 0.6px #222; */
   background: transparent;
 }
-
+table.med-table {
+  width: auto;
+  table-layout: fixed;
+}
 .shapka-table {
   background-color: #555c66;
   color: #ffff;
@@ -140,10 +149,6 @@ th.vertical {
 }
 td select {
   width: auto;
-}
-table.med-table {
-  width: auto;
-  table-layout: auto;
 }
 
 input,
