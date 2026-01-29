@@ -26,13 +26,8 @@ table.med-table {
 .med-table {
   font-size: 12px;
 }
-
 .form-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-  font-family: Arial, sans-serif;
+  display: none;
 }
 
 /* Ліва частина */
@@ -289,7 +284,13 @@ tbody td[contenteditable="true"]:focus {
     margin: 0;
     font-size: 8px;
   }
-
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+  }
   /* Ховаємо все зайве */
   .controls,
   .no-print,

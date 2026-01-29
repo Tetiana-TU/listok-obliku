@@ -2,7 +2,7 @@
 <html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <title>Зведений лист</title>
+    <title>Форма №039-2/0</title>
     <link rel="stylesheet" href="summary.css" />
   </head>
   <body>
@@ -562,9 +562,17 @@
     <div class="date-section">
       Дата “______” ____________________ 20______ р.
     </div>
+
     <div class="controls">
-      <button onclick="window.print()">Друк</button>
+      <label for="startDate">Дата від:</label>
+      <input type="date" id="startDate" />
+
+      <label for="endDate">Дата до:</label>
+      <input type="date" id="endDate" />
+
+      <button id="printBtn">Друк</button>
     </div>
     <script type="module" src="summary.js"></script>
+    <script src="printFilter.js"></script>
   </body>
 </html>

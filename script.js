@@ -41,12 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 const doctorSelect = document.getElementById("doctorSelect");
 // Список лікарів
-const doctors = [
-  "Дмитриєнко Віталій Вячеславович",
-  "Петренко Петро Петрович",
-  "Сидоренко Сидір Сидорович",
-  "Ковальчук Олена Миколаївна",
-];
+const doctors = ["Дмитриєнко Віталій Вячеславович"];
 
 // Заповнення select
 doctors.forEach((doc) => {
@@ -87,6 +82,12 @@ function updateRowNumbers() {
 }
 
 function saveAllRows() {
+  const month = monthSelect.value; // вибраний місяць
+  const year = yearSelect.value; // вибраний рік
+
+  // Завантажуємо весь архів або створюємо
+  const archive = JSON.parse(localStorage.getItem("dailyDataArchive")) || {};
+
   const rows = tbody.querySelectorAll("tr");
   const data = [];
 
@@ -100,9 +101,14 @@ function saveAllRows() {
       const select = td.querySelector("select");
       rowData[col] = select ? select.value : td.textContent.trim();
     });
-
+    const dateText = row.querySelector(".col-2")?.textContent.trim();
+    if (dateText) {
+      rowData.date = dateText; // dd.mm.yyyy
+    }
     data.push(rowData);
   });
+  if (!archive[year]) archive[year] = {};
+  archive[year][month] = data;
 
   localStorage.setItem("dailyData", JSON.stringify(data));
 }
@@ -252,11 +258,24 @@ tbody.addEventListener("keyup", (e) => {
 // --------------------------
 
 function loadRows() {
+  // const month = monthSelect.value;
+  // const year = yearSelect.value;
+
+  const archive = JSON.parse(localStorage.getItem("dailyDataArchive")) || {};
+  // const data = (archive[year] && archive[year][month]) || [];
   const data = JSON.parse(localStorage.getItem("dailyData")) || [];
 
-  // беремо шаблон ДО очищення
-  const templateRow = tbody.querySelector("tr");
-  if (!templateRow) return;
+  let templateRow = tbody.querySelector("tr");
+  if (!templateRow) {
+    templateRow = document.createElement("tr");
+    for (let i = 1; i <= 14; i++) {
+      const td = document.createElement("td");
+      td.dataset.col = i.toString();
+      td.textContent = "";
+      templateRow.appendChild(td);
+    }
+    tbody.appendChild(templateRow);
+  }
 
   tbody.innerHTML = "";
 

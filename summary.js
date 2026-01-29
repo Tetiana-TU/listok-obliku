@@ -23,9 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const groupedByDate = {};
-
+  function isValidVisit(row) {
+    return row["3"] && row["3"].trim() !== "";
+  }
   // групуємо дані за датою
   dailyData.forEach((row) => {
+    if (!isValidVisit(row)) return;
+
     const date = row["2"];
     if (!date) return;
 
@@ -49,8 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
         pulpitisPermanent: 0,
         pulpitisPermanentChildren: 0,
         pulpitisTemporary: 0,
-        periodontitis: 0,
-        periodontitisChildren: 0,
         periodontitisPermanent: 0,
         periodontitisPermanentChildren: 0,
         periodontitisTemporary: 0,
@@ -102,8 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const age = Number(row[COL.AGE]);
     const diagnosis = row[COL.DIAGNOSIS];
 
-    if (diagnosis === "K02_Permanent" || diagnosis === "K02")
-      groupedByDate[date].cariesPermanent += 1;
     if (diagnosis === "K02_Permanent") {
       groupedByDate[date].cariesPermanent += 1;
       if (age <= 17) groupedByDate[date].cariesPermanentChildren += 1; // <- це саме 10 колонка
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (filling === "PlLC") groupedByDate[date].PlLC += 1;
     });
     const procedureColumns = ["10-1", "10-2", "10-3"];
-    groupedByDate[date].column28ChildrenSum = 0;
+
     procedureColumns.forEach((col) => {
       const procedure = row[col];
 
