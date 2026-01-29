@@ -1,7 +1,12 @@
+@page {
+  size: A4 landscape; /* або portrait */
+  margin: 10mm;
+}
+
 body {
   font-family: Arial, sans-serif;
   size: 10px;
-  padding: 20px 40px;
+  padding: 20px 20px;
   /* background-image: url("images/3\ 1675427567_bogatyr-club-p-sero-goluboi-fon-odnotonnii-fon-pinterest-25.jpg"); */
   background-color: #b9c1cc;
   background-size: cover;
@@ -10,10 +15,13 @@ body {
   background-attachment: fixed;
   max-width: 100%;
 }
+
 table.med-table {
   width: 100%;
-  max-width: 100%;
   table-layout: fixed;
+}
+.med-table {
+  font-size: 12px;
 }
 
 h2 {
@@ -113,10 +121,7 @@ td {
   /* box-shadow: inset 0 0 0 0.6px #222; */
   background: transparent;
 }
-table.med-table {
-  width: auto;
-  table-layout: fixed;
-}
+
 .shapka-table {
   background-color: #555c66;
   color: #ffff;
@@ -133,22 +138,8 @@ th.vertical {
   width: 1%; /* ← ширина стовпчика */
 }
 
-/* щоб і клітинки tbody були тієї ж ширини */
-.med-table td.col-4,
-.med-table td.col-5,
-.med-table td.col-6,
-.med-table td.col-7,
-.med-table td.col-8,
-.med-table td.col-11,
-.med-table td.col-12,
-.med-table td.col-13,
-.med-table td.col-14 {
-  table-layout: auto;
-  min-width: auto;
-  text-align: center;
-}
 td select {
-  width: auto;
+  max-width: 100%;
 }
 
 input,
@@ -159,7 +150,9 @@ select {
   background: transparent;
   color: inherit;
 }
-
+.col-2 {
+  white-space: nowrap;
+}
 button {
   margin-top: 10px;
   padding: 8px 12px;
@@ -293,7 +286,7 @@ tbody td[contenteditable="true"]:focus {
 @media print {
   body {
     margin: 0;
-    font-size: 12px;
+    font-size: 8px;
   }
 
   /* Ховаємо все зайве */
@@ -303,7 +296,6 @@ tbody td[contenteditable="true"]:focus {
     display: none !important;
   }
 
-  /* Таблиця */
   table {
     width: 100%;
     border-collapse: collapse;
