@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         mucosaTreatmentChildren: 0,
         column28Sum: 0,
         column28ChildrenSum: 0,
+        sanatioPlanova: 0,
         uop: 0,
       };
     }
@@ -204,6 +205,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (procedure === "шинування_зубів") {
         groupedByDate[date].shinuvanya += 1;
       }
+
+      if (procedure === "планова_санація") {
+        groupedByDate[date].sanatioPlanova += 1;
+      }
+
       if (procedure === "лікування_слизової_рота") {
         groupedByDate[date].mucosaTreatment += 1;
         if (age <= 17) groupedByDate[date].mucosaTreatmentChildren += 1;
@@ -284,6 +290,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${day.shinuvanya}</td>                           <!--34-->
         <td>${day.mucosaTreatment}</td>                      <!--35-->
         <td>${day.mucosaTreatmentChildren}</td>             <!--36-->
+        ${"<td></td>".repeat(15)}
+        <td>${day.sanatioPlanova}</td>             <!--51-->
          
         
        
