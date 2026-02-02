@@ -81,6 +81,7 @@
         <col style="width: 120px" />
         <col style="width: 120px" />
         <col style="width: 120px" />
+        <col style="width: 120px" />
         <col style="width: 50px" />
         <col style="width: 50px" />
         <col style="width: 50px" />
@@ -107,9 +108,9 @@
           <th rowspan="2" class="vertical">
             Група населення <br />(ДГ,Ш,С,В,Р,ДПК,Д)
           </th>
-          <th rowspan="2">Діагноз</th>
+          <th colspan="2">Діагноз</th>
 
-          <!-- ГРУПА З 3 КОЛОНОК -->
+          
           <th colspan="3">
             Комплекс виконаного лікування <br />чи його етап, включаючи
             суміжні<br />
@@ -127,6 +128,8 @@
 
         <!-- ДРУГИЙ РЯДОК ПІДКОЛОНОК -->
         <tr>
+          <th>Діагноз <br />1</th>
+          <th>Діагноз <br />2</th>
           <th>Процедура <br />1</th>
           <th>Процедура <br />2</th>
           <th>Процедура <br />3</th>
@@ -141,7 +144,7 @@
           <th>(6)</th>
           <th>(7)</th>
           <th>(8)</th>
-          <th>(9)</th>
+          <th colspan="2">(9)</th>
           <th colspan="3">(10)</th>
           <th>(11)</th>
           <th>(12)</th>
@@ -177,31 +180,161 @@
               <option value="value3">Значення 3</option>
             </select> -->
           </td>
-          <td contenteditable="true" class="col-9" data-col="9">
+          <td class="col-9-1" data-col="9-1">
+            <div class="diag-wrap">
             <select class="my-list" name="my-list">
-              <option value="">—</option>
-              <option value="K02_Permanent">
-                Карієс зубів (K02) Постійні зуби
-              </option>
-              <option value="K02_Temporary">
-                Карієс зубів (K02) Тимчасові зуби
-              </option>
-              <option value="K04.0_Permanent">
-                Пульпіт (K04.0) Постійні зуби
-              </option>
-              <option value="K04.0_Temporary">
-                Пульпіт (K04.0) Тимчасові зуби
-              </option>
-              <option value="K04.4_Permanent">
-                Періодонтит (K04.4) Постійні зуби
-              </option>
-              <option value="K04.4_Temporary">
-                Періодонтит (K04.4) Тимчасові зуби
-              </option>
-              <option value="Z01.2">Профілактичний огляд (Z01.2)</option>
-              <option value="НД">Невідкладна допомога</option>
+            <option value="">—</option>
+            <option value="K02_Permanent">K02 Карієс постійні зуби</option>
+            <option value="K02_Temporary">K02 Карієс тимчасові зуби</option>
+            <option value="K04.0_Permanent">K04.0 Пульпіт постійні зуби</option>
+            <option value="K04.0_Temporary">K04.0 Пульпіт тимчасові зуби</option>
+            <option value="K04.4_Permanent">K04.4 Періодонтит постійні зуби</option>
+            <option value="K04.4_Temporary">K04.4 Періодонтит тимчасові зуби</option>
+            <option value="K05.0">K05.0 Гінгівіт гострий</option>
+            <option value="K05.1">K05.1 Гінгівіт хронічний</option>
+            <option value="Z01.2">Профілактичний огляд</option>
             </select>
+             <input
+      type="text"
+      class="tooth-input"
+      placeholder="№ зуба"
+    />
+    </div>
           </td>
+          <td class="col-9-2" data-col="9-2">
+            <div class="diag-wrap">
+            <select class="my-list" name="my-list">
+            <option value="">—</option>
+            <option value="K02_Permanent">K02 Карієс постійні зуби</option>
+            <option value="K02_Temporary">K02 Карієс тимчасові зуби</option>
+            <option value="K04.0_Permanent">K04.0 Пульпіт постійні зуби</option>
+            <option value="K04.0_Temporary">K04.0 Пульпіт тимчасові зуби</option>
+            <option value="K04.4_Permanent">K04.4 Періодонтит постійні зуби</option>
+            <option value="K04.4_Temporary">K04.4 Періодонтит тимчасові зуби</option>
+            <option value="K05.0">K05.0 Гінгівіт гострий</option>
+            <option value="K05.1">K05.1 Гінгівіт хронічний</option>
+            <option value="Z01.2">Профілактичний огляд</option>
+            </select>
+            <input
+      type="text"
+      class="tooth-input"
+      placeholder="№ зуба"
+    />
+            </div>
+          </td>
+ <!-- <td class="col-9" data-col="9">
+  <div style="display: flex; gap: 10px;">
+    <div class="cont-diagnos-tooth" style="display: flex; flex: 1; gap: 5px;">
+                       <div class="ds" style="flex: 3;">
+                        <select class="my-list" name="diagnos-left">
+                          <option value="">—</option>
+                          <option value="K02_Permanent">K02 Карієс постійні зуби</option>
+                          <option value="K02_Temporary">K02 Карієс тимчасові зуби</option>
+                          <option value="K04.0_Permanent">K04.0 Пульпіт постійні зуби</option>
+                          <option value="K04.0_Temporary">K04.0 Пульпіт тимчасові зуби</option>
+                          <option value="K04.4_Permanent">K04.4 Періодонтит постійні зуби</option>
+                          <option value="K04.4_Temporary">K04.4 Періодонтит тимчасові зуби</option>
+                          <option value="K05.0">K05.0 Гінгівіт гострий</option>
+                          <option value="K05.1">K05.1 Гінгівіт хронічний</option>
+                          <option value="Z01.2">Профілактичний огляд</option>
+                        </select>
+                      </div>
+                       <div class="zub" style="flex: 1;">
+                       <select class="tooth" name="tooth-left" style="width: 100%;">
+                                              <option value="_">_</option>
+                                              <option value="1">1</option>
+                                              <option value="2">2</option>
+                                              <option value="3">3</option>
+                                              <option value="4">4</option>
+                                              <option value="5">5</option>
+                                              <option value="6">6</option>
+                                              <option value="7">7</option>
+                                              <option value="8">8</option>
+                                              <option value="9">9</option>
+                                              <option value="10">10</option>
+                                              <option value="11">11</option>
+                                              <option value="12">12</option>
+                                              <option value="13">13</option>
+                                              <option value="14">14</option>
+                                              <option value="15">15</option>
+                                              <option value="16">16</option>
+                                              <option value="17">17</option>
+                                              <option value="18">18</option>
+                                              <option value="19">19</option>
+                                              <option value="20">20</option>
+                                              <option value="21">21</option>
+                                              <option value="22">22</option>
+                                              <option value="23">23</option>
+                                              <option value="24">24</option>
+                                              <option value="25">25</option>
+                                              <option value="26">26</option>
+                                              <option value="27">27</option>
+                                              <option value="28">28</option>
+                                              <option value="29">29</option>
+                                              <option value="30">30</option>
+                                              <option value="31">31</option>
+                                              <option value="32">32</option>
+                       </select>
+                        </div>
+                        </div>
+       
+               <div class="cont-diagnos-tooth" style="display: flex; flex: 1; gap: 5px;">
+             <div class="ds" style="flex: 3;">
+              <select class="my-list" name="diagnos-right" style="width: 100%;">
+            <option value="">—</option>
+            <option value="K02_Permanent">K02 Карієс постійні зуби</option>
+            <option value="K02_Temporary">K02 Карієс тимчасові зуби</option>
+            <option value="K04.0_Permanent">K04.0 Пульпіт постійні зуби</option>
+            <option value="K04.0_Temporary">K04.0 Пульпіт тимчасові зуби</option>
+            <option value="K04.4_Permanent">K04.4 Періодонтит постійні зуби</option>
+            <option value="K04.4_Temporary">K04.4 Періодонтит тимчасові зуби</option>
+            <option value="K05.0">K05.0 Гінгівіт гострий</option>
+            <option value="K05.1">K05.1 Гінгівіт хронічний</option>
+            <option value="Z01.2">Профілактичний огляд</option>
+                 </select>
+               </div>
+               <div class="zub" style="flex: 1;">
+              <select class="tooth" name="tooth-right" style="width: 100%;">
+            <option value="_">_</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+            <option value="32">32</option>
+           </select>
+        </div>
+      </div>
+    </div>
+    
+</td> -->
+
           <td class="col-10-1" data-col="10-1">
             <select class="my-list" name="my-list">
               <option value="">—</option>
@@ -236,13 +369,16 @@
                 Лікування слизової оболонки порожнини рота
               </option>
               <option value="видалення_зуба_карієс">
-                Видалено зубів з приводу ускладеного карієсу
+                Видалення зуба з приводу ускладеного карієсу
+              </option>
+               <option value="видалення_зуба_пародонт">
+                Видалення зуба з приводу пародонтиту
               </option>
               <option value="видалення_зуба_ортодонт">
-                Видалено зубів з ортодонтичною метою
+                Видалення зуба з ортодонтичною метою
               </option>
               <option value="видалення_зуба_фізіол">
-                Видалено зубів у зв'язку з фізіологічною зміною
+                Видалення зуба у зв'язку з фізіологічною зміною
               </option>
               <option value="операція_гострі_запальні_процеси">
                 Операція - гострі запальні процеси
@@ -256,6 +392,7 @@
               <option value="операція_інші">Операція - інші</option>
               <option value="рентген">рентген</option>
               <option value="планова_санація">Оглянуто в порядку планової санації</option>
+              <option value="сановано">Сановано, усього</option>
               <option value="гігієна">Гігієнічне навчання</option>
               <option value="навчання_догляду">
                 Навчання догляду за порожниною рота
@@ -301,13 +438,16 @@
                 Лікування слизової оболонки порожнини рота
               </option>
               <option value="видалення_зуба_карієс">
-                Видалено зубів з приводу ускладеного карієсу
+                Видалення зуба з приводу ускладеного карієсу
+              </option>
+              <option value="видалення_зуба_пародонт">
+                Видалення зуба з приводу пародонтиту
               </option>
               <option value="видалення_зуба_ортодонт">
-                Видалено зубів з ортодонтичною метою
+                Видалення зуба з ортодонтичною метою
               </option>
               <option value="видалення_зуба_фізіол">
-                Видалено зубів у зв'язку з фізіологічною зміною
+                Видалення зуба у зв'язку з фізіологічною зміною
               </option>
               <option value="операція_гострі_запальні_процеси">
                 Операція - гострі запальні процеси
@@ -321,6 +461,7 @@
               <option value="операція_інші">Операція - інші</option>
               <option value="рентген">рентген</option>
               <option value="планова_санація">Оглянуто в порядку планової санації</option>
+              <option value="сановано">Сановано, усього</option>
               <option value="гігієна">Гігієнічне навчання</option>
               <option value="навчання догляду">
                 Навчання догляду за порожниною рота
@@ -332,7 +473,7 @@
               <option value="герметизація_фісур">Герметизація фісур</option>
             </select>
           </td>
-          <td class="col-10-3" data-col="10-3">
+        <td class="col-10-3" data-col="10-3">
             <select class="my-list" name="my-list">
               <option value="">—</option>
               <option value="первинний_огляд">Первинний огляд</option>
@@ -366,13 +507,16 @@
                 Лікування слизової оболонки порожнини рота
               </option>
               <option value="видалення_зуба_карієс">
-                Видалено зубів з приводу ускладеного карієсу
+                Видаленоня зуба з приводу ускладеного карієсу
+              </option>
+              <option value="видалення_зуба_пародонт">
+                Видалення зуба з приводу пародонтиту
               </option>
               <option value="видалення_зуба_ортодонт">
-                Видалено зубів з ортодонтичною метою
+                Видалення зуба з ортодонтичною метою
               </option>
               <option value="видалення_зуба_фізіол">
-                Видалено зубів у зв'язку з фізіологічною зміною
+                Видалення зуба у зв'язку з фізіологічною зміною
               </option>
               <option value="операція_гострі_запальні_процеси">
                 Операція - гострі запальні процеси
@@ -386,8 +530,9 @@
               <option value="операція_інші">Операція - інші</option>
               <option value="рентген">рентген</option>
               <option value="планова_санація">Оглянуто в порядку планової санації</option>
+              <option value="сановано">Сановано, усього</option>
               <option value="гігієна">Гігієнічне навчання</option>
-              <option value="навчання догляду">
+              <option value="навчання_догляду">
                 Навчання догляду за порожниною рота
               </option>
               <option value="професійна_гігієна">Професійна гігієна</option>
@@ -419,5 +564,6 @@
     </div>
     <script src="script.js"></script>
     <script src="indexListData.js"></script>
+    
   </body>
 </html>

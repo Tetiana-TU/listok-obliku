@@ -78,7 +78,22 @@ document.addEventListener("DOMContentLoaded", () => {
         mucosaTreatmentChildren: 0,
         column28Sum: 0,
         column28ChildrenSum: 0,
+        ToothExtractionCaries: 0,
+        ToothExtractionCariesChildren: 0,
+        ExtractionParodont: 0,
+        ExtractionOrthodonticChildren: 0,
+        ExtractionphysiologyChildren: 0,
+        OperatioInflammatoryProcesses: 0,
+        OperatioTumors: 0,
+        OperatioImplants: 0,
+        OperatioOthers: 0,
         sanatioPlanova: 0,
+        sanatioPlanovaChildren: 0,
+        HygieneEducation: 0,
+        OralCare: 0,
+        ProfessionalOralHygiene: 0,
+        RemineralizationTherapy: 0,
+        PitAndFissureSealing: 0,
         uop: 0,
       };
     }
@@ -100,55 +115,52 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    if (row["9"] === "НД") groupedByDate[date].emergency += 1;
-
     const age = Number(row[COL.AGE]);
-    const diagnosis = row[COL.DIAGNOSIS];
+    const diagnosis = [row["9-1"], row["9-2"]].filter(Boolean);
 
-    if (diagnosis === "K02_Permanent") {
-      groupedByDate[date].cariesPermanent += 1;
-      if (age <= 17) groupedByDate[date].cariesPermanentChildren += 1; // <- це саме 10 колонка
-    }
-    if (diagnosis === "K02_Temporary") {
-      groupedByDate[date].cariesTemporary += 1;
-      if (age <= 17) groupedByDate[date].cariesChildren += 1; // для тимчасових зубів
-    }
+    diagnosis.forEach((diagnosis) => {
+      if (diagnosis === "K02_Permanent") {
+        groupedByDate[date].cariesPermanent += 1;
+        if (age <= 17) groupedByDate[date].cariesPermanentChildren += 1;
+      }
+
+      if (diagnosis === "K02_Temporary") {
+        groupedByDate[date].cariesTemporary += 1;
+        if (age <= 17) groupedByDate[date].cariesChildren += 1;
+      }
+    });
 
     // ПУЛЬПІТ
-    if (
-      diagnosis === "K04.0_Permanent" ||
-      (diagnosis === "K04.0" && age > 17)
-    ) {
-      groupedByDate[date].pulpitisPermanent += 1;
-      if (age <= 17) groupedByDate[date].pulpitisPermanentChildren += 1;
-    }
-    if (
-      diagnosis === "K04.0_Temporary" ||
-      (diagnosis === "K04.0" && age <= 17)
-    ) {
-      groupedByDate[date].pulpitisTemporary += 1;
-    }
-    if (diagnosis.includes("K04.0") && age <= 17) {
-      groupedByDate[date].pulpitisChildren += 1;
-    }
+    diagnosis.forEach((diagnosis) => {
+      if (diagnosis === "K04.0_Permanent") {
+        groupedByDate[date].pulpitisPermanent += 1;
+        if (age <= 17) groupedByDate[date].pulpitisPermanentChildren += 1;
+      }
+
+      if (diagnosis === "K04.0_Temporary") {
+        groupedByDate[date].pulpitisTemporary += 1;
+      }
+
+      if (diagnosis?.includes("K04.0") && age <= 17) {
+        groupedByDate[date].pulpitisChildren += 1;
+      }
+    });
 
     // ПЕРІОДОНТИТ
-    if (
-      diagnosis === "K04.4_Permanent" ||
-      (diagnosis === "K04.4" && age > 17)
-    ) {
-      groupedByDate[date].periodontitisPermanent += 1;
-      if (age <= 17) groupedByDate[date].periodontitisPermanentChildren += 1;
-    }
-    if (
-      diagnosis === "K04.4_Temporary" ||
-      (diagnosis === "K04.4" && age <= 17)
-    ) {
-      groupedByDate[date].periodontitisTemporary += 1;
-    }
-    if (diagnosis.includes("K04.4") && age <= 17) {
-      groupedByDate[date].periodontitisChildren += 1;
-    }
+    diagnosis.forEach((diagnosis) => {
+      if (diagnosis === "K04.4_Permanent") {
+        groupedByDate[date].periodontitisPermanent += 1;
+        if (age <= 17) groupedByDate[date].periodontitisPermanentChildren += 1;
+      }
+
+      if (diagnosis === "K04.4_Temporary") {
+        groupedByDate[date].periodontitisTemporary += 1;
+      }
+
+      if (diagnosis?.includes("K04.4") && age <= 17) {
+        groupedByDate[date].periodontitisChildren += 1;
+      }
+    });
 
     // ЗНЕБОЛЮВАННЯ
     const anesthesia = row[11];
@@ -175,6 +187,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const isChild = age <= 17;
       if (!procedure) return;
+
+      if (procedure === "невідкладна_допомога") {
+        groupedByDate[date].emergency += 1;
+      }
 
       // P_вітально_хірургічно
       if (procedure === "P_вітально_хірургічно") {
@@ -206,14 +222,62 @@ document.addEventListener("DOMContentLoaded", () => {
         groupedByDate[date].shinuvanya += 1;
       }
 
-      if (procedure === "планова_санація") {
+      if (procedure === "сановано") {
         groupedByDate[date].sanatioPlanova += 1;
+        if (age <= 17) groupedByDate[date].sanatioPlanovaChildren += 1;
       }
 
       if (procedure === "лікування_слизової_рота") {
         groupedByDate[date].mucosaTreatment += 1;
         if (age <= 17) groupedByDate[date].mucosaTreatmentChildren += 1;
       }
+
+      if (procedure === "видалення_зуба_карієс") {
+        groupedByDate[date].ToothExtractionCaries += 1;
+        if (age <= 17) groupedByDate[date].ToothExtractionCariesChildren += 1;
+      }
+      if (procedure === "видалення_зуба_пародонт") {
+        groupedByDate[date].ExtractionParodont += 1;
+      }
+      if (procedure === "видалення_зуба_ортодонт") {
+        if (age <= 17) groupedByDate[date].ExtractionOrthodonticChildren += 1;
+      }
+      if (procedure === "видалення_зуба_фізіол") {
+        if (age <= 17) groupedByDate[date].ExtractionphysiologyChildren += 1;
+      }
+
+      if (procedure === "операція_гострі_запальні_процеси") {
+        groupedByDate[date].OperatioInflammatoryProcesses += 1;
+      }
+
+      if (procedure === "операція_пухлини") {
+        groupedByDate[date].OperatioTumors += 1;
+      }
+
+      if (procedure === "операція_імплантати") {
+        groupedByDate[date].OperatioImplants += 1;
+      }
+
+      if (procedure === "операція_інші") {
+        groupedByDate[date].OperatioOthers += 1;
+      }
+      if (procedure === "гігієна") {
+        groupedByDate[date].HygieneEducation += 1;
+      }
+      if (procedure === "навчання_догляду") {
+        groupedByDate[date].OralCare += 1;
+      }
+      if (procedure === "професійна_гігієна") {
+        groupedByDate[date].ProfessionalOralHygiene += 1;
+      }
+
+      if (procedure === "ремінералізуюча_терапія") {
+        groupedByDate[date].RemineralizationTherapy += 1;
+      }
+      if (procedure === "герметизація_фісур") {
+        groupedByDate[date].PitAndFissureSealing += 1;
+      }
+
       if (isChild) {
         if (
           procedure === "зняття_напластувань" ||
@@ -249,10 +313,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const [db, mb, yb] = b.date.split(".");
     return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
   });
+  const monthTotal = {};
 
   sortedDays.forEach((day) => {
+    Object.keys(day).forEach((key) => {
+      if (typeof day[key] === "number") {
+        monthTotal[key] = (monthTotal[key] || 0) + day[key];
+      }
+    });
+  });
+  sortedDays.forEach((day) => {
     const tr = document.createElement("tr");
-
     tr.innerHTML = `
         <td>${day.date}</td>                             <!--1-->
         <td></td>                                        <!--2-->
@@ -290,21 +361,116 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${day.shinuvanya}</td>                           <!--34-->
         <td>${day.mucosaTreatment}</td>                      <!--35-->
         <td>${day.mucosaTreatmentChildren}</td>             <!--36-->
-        ${"<td></td>".repeat(15)}
-        <td>${day.sanatioPlanova}</td>             <!--51-->
-         
-        
-       
-        
-      `;
+        `;
     summaryBody1.appendChild(tr);
   });
+  console.log("Дані для підсумку:", monthTotal);
+  // Рядок "Всього" для summaryBody1
+  const totalTr1 = document.createElement("tr");
+
+  totalTr1.style.fontWeight = "bold";
+  totalTr1.innerHTML = `
+  <td>Всього</td>                                    <!--1: дата-->
+  <td></td>                                          <!--2-->
+  <td>${monthTotal.visits}</td>                     <!--3-->
+  <td>${monthTotal.rural}</td>                       <!--4-->
+  <td>${monthTotal.primaryTotal}/${monthTotal.primaryRural}</td> <!--5-->
+  <td>${monthTotal.primaryChildren}</td>            <!--6-->
+  <td>${monthTotal.emergency}</td>                  <!--7-->
+  <td>${monthTotal.groupSum}</td>                   <!--8-->
+  <td>${monthTotal.cariesPermanent}</td>            <!--9-->
+  <td>${monthTotal.cariesPermanentChildren}</td>    <!--10-->
+  <td>${monthTotal.cariesTemporary}</td>            <!--11-->  
+  <td>${monthTotal.pulpitisPermanent}</td>          <!--12-->
+  <td>${monthTotal.pulpitisPermanentChildren}</td>  <!--13--> 
+  <td>${monthTotal.periodontitisPermanent}</td>     <!--14-->
+  <td>${monthTotal.periodontitisPermanentChildren}</td> <!--15-->
+  <td>${monthTotal.pulpitisTemporary}</td>          <!--16-->
+  <td>${monthTotal.periodontitisTemporary}</td>     <!--17-->
+  <td>${monthTotal.P_vitalTotal}</td>               <!--18-->
+  <td>${monthTotal.P_vitalChildren}</td>            <!--19-->
+  <td>${monthTotal.PtTotal}</td>                    <!--20-->
+  <td>${monthTotal.PtChildren}</td>                 <!--21-->
+  <td>${monthTotal.depulped}</td>                   <!--22-->
+  <td>${monthTotal.PlC}</td>                        <!--23-->
+  <td>${monthTotal.PlAm}</td>                       <!--24-->
+  <td>${monthTotal.PlCC}</td>                       <!--25-->
+  <td>${monthTotal.PlLC}</td>                       <!--26--> 
+  <td>${monthTotal.anesthesiaLocal}/${monthTotal.anesthesiaGeneral}</td> <!--27-->
+  <td>${monthTotal.column28Sum}</td>                <!--28-->
+  <td>${monthTotal.column28ChildrenSum}</td>        <!--29-->
+  <td>${monthTotal.naplast}</td>                    <!--30--> 
+  <td>${monthTotal.medlikparodont}</td>             <!--31-->
+  <td>${monthTotal.kuretazh}</td>                   <!--32-->
+  <td>${monthTotal.klapteva}</td>                   <!--33-->
+  <td>${monthTotal.shinuvanya}</td>                 <!--34-->
+  <td>${monthTotal.mucosaTreatment}</td>            <!--35-->
+  <td>${monthTotal.mucosaTreatmentChildren}</td>    <!--36-->
+`;
+  summaryBody1.appendChild(totalTr1);
+
   sortedDays.forEach((day) => {
     const tr2 = document.createElement("tr");
     tr2.innerHTML = `
-     ${"<td></td>".repeat(25)}
-      <td>${day.uop.toFixed(1)}</td>
+    <td></td>                                            <!--37-->
+     <td>${day.ToothExtractionCaries}</td>               <!--38-->
+     <td>${day.ExtractionParodont}</td>                  <!--39-->
+     <td>${day.ToothExtractionCariesChildren}</td>       <!--40-->
+     <td>${day.ExtractionOrthodonticChildren}</td>        <!--41-->
+     <td></td>                                            <!--42-->
+     <td>${day.ExtractionphysiologyChildren}</td>        <!--43-->
+      <td></td>                                          <!--44-->
+     <td>${day.OperatioInflammatoryProcesses}</td>        <!--45-->
+     <td>${day.OperatioTumors}</td>                         </--46-->
+     <td>${day.OperatioImplants}</td>                     </--47-->
+     <td>${day.OperatioOthers}</td>                       </--48-->
+     <td>${day.sanatioPlanova + day.sanatioPlanovaChildren}</td> </--49-->
+     <td></td>                                           </--50-->
+     <td></td>                                            <!--51-->
+     <td></td>                                           <!--52-->
+     <td>${day.sanatioPlanova}</td>                       <!--53-->
+     <td></td>                                             <!--54-->
+     <td></td>                                            <!--55-->
+     <td>${day.sanatioPlanovaChildren}</td>               <!--56-->  
+     <td>${day.HygieneEducation}</td>                     <!--57-->
+     <td>${day.OralCare}</td>                             <!--58-->
+     <td>${day.ProfessionalOralHygiene}</td>             <!--59-->
+     <td>${day.RemineralizationTherapy}</td>              <!--60-->
+     <td>${day.PitAndFissureSealing}</td>                 <!--61-->
+      <td>${day.uop.toFixed(1)}</td>                     <!--62-->
     `;
     summaryBody2.appendChild(tr2);
   });
+  // Рядок "Всього" для summaryBody2
+  const totalTr2 = document.createElement("tr");
+  totalTr2.style.fontWeight = "bold";
+  totalTr2.innerHTML = `
+  <td>Всього</td>                                     <!--37-->
+  <td>${monthTotal.ToothExtractionCaries}</td>        <!--38-->
+  <td>${monthTotal.ExtractionParodont}</td>           <!--39-->
+  <td>${monthTotal.ToothExtractionCariesChildren}</td> <!--40-->
+  <td>${monthTotal.ExtractionOrthodonticChildren}</td> <!--41-->
+  <td></td>                                           <!--42-->
+  <td>${monthTotal.ExtractionphysiologyChildren}</td> <!--43-->
+  <td></td>                                           <!--44-->
+  <td>${monthTotal.OperatioInflammatoryProcesses}</td> <!--45-->
+  <td>${monthTotal.OperatioTumors}</td>               <!--46-->
+  <td>${monthTotal.OperatioImplants}</td>             <!--47-->
+  <td>${monthTotal.OperatioOthers}</td>               <!--48-->
+  <td>${monthTotal.sanatioPlanova + monthTotal.sanatioPlanovaChildren}</td> <!--49-->
+  <td></td>                                          <!--50-->
+  <td></td>                                          <!--51-->
+  <td></td>                                          <!--52-->
+  <td>${monthTotal.sanatioPlanova}</td>              <!--53-->
+  <td></td>                                           <!--54-->
+  <td></td>                                          <!--55-->
+  <td>${monthTotal.sanatioPlanovaChildren}</td>     <!--56-->  
+  <td>${monthTotal.HygieneEducation}</td>           <!--57-->
+  <td>${monthTotal.OralCare}</td>                   <!--58-->
+  <td>${monthTotal.ProfessionalOralHygiene}</td>   <!--59-->
+  <td>${monthTotal.RemineralizationTherapy}</td>    <!--60-->
+  <td>${monthTotal.PitAndFissureSealing}</td>       <!--61-->
+  <td>${monthTotal.uop.toFixed(1)}</td>             <!--62-->
+`;
+  summaryBody2.appendChild(totalTr2);
 });

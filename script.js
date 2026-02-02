@@ -212,16 +212,18 @@ function updateSum(row) {
   if (sumCell) sumCell.textContent = procedureSum + anesthesiaSum || "";
 }
 tbody.addEventListener("change", (e) => {
+  const row = e.target.closest("tr");
+
   if (
     e.target.matches(
       ".col-10-1 select, .col-10-2 select, .col-10-3 select, .col-11 select",
     )
   ) {
-    const row = e.target.closest("tr");
     updateSum(row);
-    saveAllRows(); // щоб зберегти вибрані значення
   }
-  if (e.target.matches(".col-9 select")) {
+
+  // ⬅️ ЗБЕРІГАЄМО БУДЬ-ЯКУ ЗМІНУ SELECT
+  if (e.target.tagName === "SELECT") {
     saveAllRows();
   }
 });
@@ -309,7 +311,7 @@ function loadRows() {
   makeCellsEditable();
 }
 
-tbody.addEventListener("input", saveAllRows);
+// tbody.addEventListener("input", saveAllRows);
 
 document.getElementById("openSummary").addEventListener("click", () => {
   window.open("summary.html", "_blank");

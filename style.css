@@ -276,6 +276,40 @@ tbody td[contenteditable="true"]:focus {
   background-color: #111;
   color: #ffff;
 }
+.col-9-flex {
+  display: flex;
+  gap: 5px; /* відстань між лівою і правою підколонкою */
+}
+
+.col-9-1,
+.col-9-2 {
+  flex: 1; /* рівна ширина для лівої і правої */
+}
+
+.cont-diagnos-tooth {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* відстань між діагнозом і зубом */
+}
+
+.ds select,
+.zub select {
+  width: 100%;
+}
+.diag-wrap {
+  display: flex;
+  gap: 6px;
+}
+
+.diag-wrap select {
+  flex: 3;
+}
+
+.tooth-input {
+  flex: 1;
+  text-align: center;
+}
+
 /* =========================
    СТИЛІ ДЛЯ ДРУКУ
 ========================= */
