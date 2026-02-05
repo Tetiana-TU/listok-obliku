@@ -181,7 +181,7 @@ function makeCellsEditable() {
 
 const procedurePoints = {
   первинний_огляд: 0.5,
-  невідкладна_допомога: 1,
+  невідкладна_допомога: 0.5,
   зняття_пломби: 1,
   P_вітально_хірургічно: 1,
   Pt: 1,
@@ -190,27 +190,27 @@ const procedurePoints = {
   PlAm: 1,
   PlCC: 1,
   PlLC: 1,
-  зняття_напластувань: 1,
+  зняття_напластувань: 4,
   медикаментозне_лікування_пародонту: 1,
   кюретаж: 1,
   клаптева_операція: 1,
   шинування_зубів: 1,
   лікування_слизової_рота: 1,
-  видалення_зуба_карієс: 1,
-  видалення_зуба_ортодонт: 1,
-  видалення_зуба_фізіол: 1,
-  операція_гострі_запальні_процеси: 1,
-  операція_пухлини: 1,
-  операція_імплантати: 1,
-  операція_інші: 1,
-  рентген: 1,
+  видалення_зуба_карієс: 0.75,
+  видалення_зуба_ортодонт: 0.75,
+  видалення_зуба_фізіол: 0.75,
+  операція_гострі_запальні_процеси: 1.5,
+  операція_пухлини: 4,
+  операція_імплантати: 4,
+  операція_інші: 3,
+  рентген: 0.5,
   планова_санація: 1,
   сановано: 1,
   гігієна: 1,
   навчання_догляду: 1,
   професійна_гігієна: 1,
   ремінералізуюча_терапія: 1,
-  герметизація_фісур: 1,
+  герметизація_фісур: 0.5,
 };
 
 // Бали за знеболювання (11 колонка)
@@ -256,12 +256,81 @@ tbody.addEventListener("change", (e) => {
 
 // Видалення рядка клавішею Delete
 tbody.addEventListener("keydown", (e) => {
-  if (e.key === "Delete") {
+  // =======================
+  // Видалення рядка клавішею Delete
+  // =======================
+  if (e.key === "Delete" && e.target.tagName !== "INPUT") {
     const row = e.target.closest("tr");
     if (row) {
-      row.remove();
-      updateRowNumbers();
-      saveAllRows();
+      const confirmed = confirm(
+        "Ви впевнені, що хочете видалити данні пацієнта?",
+      );
+      if (confirmed) {
+        row.remove();
+        updateRowNumbers();
+        saveAllRows();
+      } else {
+        e.preventDefault();
+      }
+    }
+  }
+
+  // =======================
+  // Навігація по таблиці стрілками
+  // =======================
+  const arrowKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+  if (!arrowKeys.includes(e.key)) return; // якщо не стрілка, виходимо
+
+  const target = e.target;
+  let cell;
+
+  if (target.tagName === "TD") {
+    cell = target;
+  } else if (target.tagName === "INPUT") {
+    cell = target.closest("td");
+  } else {
+    return;
+  }
+
+  const row = cell.parentElement;
+  const rowIndex = Array.from(tbody.rows).indexOf(row);
+  const cellIndex = Array.from(row.cells).indexOf(cell);
+
+  let nextRowIndex = rowIndex;
+  let nextCellIndex = cellIndex;
+
+  switch (e.key) {
+    case "ArrowUp":
+      nextRowIndex = Math.max(rowIndex - 1, 0);
+      break;
+    case "ArrowDown":
+      nextRowIndex = Math.min(rowIndex + 1, tbody.rows.length - 1);
+      break;
+    case "ArrowLeft":
+      nextCellIndex = Math.max(cellIndex - 1, 0);
+      break;
+    case "ArrowRight":
+      nextCellIndex = Math.min(cellIndex + 1, row.cells.length - 1);
+      break;
+  }
+
+  const nextCell = tbody.rows[nextRowIndex].cells[nextCellIndex];
+
+  if (nextCell) {
+    e.preventDefault(); // зупиняємо стандартну поведінку
+
+    const input = nextCell.querySelector("input, .tooth-input");
+    if (input) {
+      input.focus();
+      input.select();
+    } else if (nextCell.hasAttribute("contenteditable")) {
+      nextCell.focus();
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(nextCell);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
     }
   }
 });
@@ -337,6 +406,7 @@ function loadRows() {
   makeCellsEditable();
   makeToothInputsPersistent();
   restoreToothInputs();
+  // filterTable();
 }
 
 // tbody.addEventListener("input", saveAllRows);
