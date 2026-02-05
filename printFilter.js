@@ -1,38 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
   const printBtn = document.getElementById("printBtn");
+  const startDateInput = document.getElementById("startDate");
+  const endDateInput = document.getElementById("endDate");
 
+  // 1️⃣ Відновлюємо дати з localStorage
+  const savedStart = localStorage.getItem("summaryStartDate");
+  const savedEnd = localStorage.getItem("summaryEndDate");
+
+  if (savedStart) startDateInput.value = savedStart;
+  if (savedEnd) endDateInput.value = savedEnd;
+
+  // Відразу будуємо таблицю з збереженим періодом
+  buildSummary(savedStart, savedEnd);
+
+  // 2️⃣ Зберігаємо дати при зміні
+  [startDateInput, endDateInput].forEach((input) => {
+    input.addEventListener("change", () => {
+      localStorage.setItem("summaryStartDate", startDateInput.value);
+      localStorage.setItem("summaryEndDate", endDateInput.value);
+
+      // Перероблюємо таблицю для нового періоду
+      buildSummary(startDateInput.value, endDateInput.value);
+    });
+  });
+
+  // 3️⃣ Обробка кнопки друку
   printBtn.addEventListener("click", () => {
-    const startDateInput = document.getElementById("startDate").value;
-    const endDateInput = document.getElementById("endDate").value;
+    const startDate = startDateInput.value;
+    const endDate = endDateInput.value;
 
-    if (!startDateInput || !endDateInput) {
+    if (!startDate || !endDate) {
       alert("Виберіть обидві дати!");
       return;
     }
 
-    const startDate = new Date(startDateInput);
-    const endDate = new Date(endDateInput);
+    // Генеруємо таблицю для вибраного періоду
+    buildSummary(startDate, endDate);
 
-    const rows1 = document.querySelectorAll("#summaryBody1 tr");
-    const rows2 = document.querySelectorAll("#summaryBody2 tr");
-
-    // Фільтруємо таблиці
-    rows1.forEach((tr, index) => {
-      const dateStr = tr.cells[0].innerText;
-      const [day, month, year] = dateStr.split(".");
-      const rowDate = new Date(`${year}-${month}-${day}`);
-
-      const visible = rowDate >= startDate && rowDate <= endDate;
-      tr.style.display = visible ? "" : "none";
-      if (rows2[index]) rows2[index].style.display = visible ? "" : "none";
-    });
-
+    // Викликаємо друк
     window.print();
-
-    // Повертаємо всі рядки після друку
-    rows1.forEach((tr, index) => {
-      tr.style.display = "";
-      if (rows2[index]) rows2[index].style.display = "";
-    });
   });
 });

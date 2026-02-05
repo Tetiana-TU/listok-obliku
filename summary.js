@@ -1,14 +1,28 @@
 import { COL } from "./constants.js"; // константи колонок
 
-document.addEventListener("DOMContentLoaded", () => {
+function isInPeriod(dateStr, start, end) {
+  if (!start || !end) return true; // якщо період не заданий
+
+  const [d, m, y] = dateStr.split(".");
+  const date = new Date(y, m - 1, d);
+
+  return date >= start && date <= end;
+}
+function buildSummary(startDateStr = null, endDateStr = null) {
   const summaryBody1 = document.getElementById("summaryBody1");
   const summaryBody2 = document.getElementById("summaryBody2");
+
+  if (!summaryBody1 || !summaryBody2) return;
 
   summaryBody1.innerHTML = "";
   summaryBody2.innerHTML = "";
 
-  // зчитуємо дані з localStorage
   const dailyData = JSON.parse(localStorage.getItem("dailyData")) || [];
+
+  const start = startDateStr ? new Date(startDateStr) : null;
+  const end = endDateStr ? new Date(endDateStr) : null;
+
+  const groupedByDate = {};
 
   //   функція для колонки первинних (тепер арабські числа)
   function parsePrimaryColumn(value) {
@@ -22,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return total === 1;
   }
 
-  const groupedByDate = {};
   function isValidVisit(row) {
     return row["3"] && row["3"].trim() !== "";
   }
@@ -32,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const date = row["2"];
     if (!date) return;
-
+    if (!isInPeriod(date, start, end)) return;
     if (!groupedByDate[date]) {
       groupedByDate[date] = {
         date,
@@ -367,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Дані для підсумку:", monthTotal);
   // Рядок "Всього" для summaryBody1
   const totalTr1 = document.createElement("tr");
-
+  totalTr1.id = "totalRow";
   totalTr1.style.fontWeight = "bold";
   totalTr1.innerHTML = `
   <td>Всього</td>                                    <!--1: дата-->
@@ -421,11 +434,11 @@ document.addEventListener("DOMContentLoaded", () => {
      <td>${day.ExtractionphysiologyChildren}</td>        <!--43-->
       <td></td>                                          <!--44-->
      <td>${day.OperatioInflammatoryProcesses}</td>        <!--45-->
-     <td>${day.OperatioTumors}</td>                         </--46-->
-     <td>${day.OperatioImplants}</td>                     </--47-->
-     <td>${day.OperatioOthers}</td>                       </--48-->
-     <td>${day.sanatioPlanova + day.sanatioPlanovaChildren}</td> </--49-->
-     <td></td>                                           </--50-->
+     <td>${day.OperatioTumors}</td>                         <!--46-->
+     <td>${day.OperatioImplants}</td>                     <!--47-->
+     <td>${day.OperatioOthers}</td>                       <!--48-->
+     <td>${day.sanatioPlanova + day.sanatioPlanovaChildren}</td> <!--49-->
+     <td></td>                                           <!--50-->
      <td></td>                                            <!--51-->
      <td></td>                                           <!--52-->
      <td>${day.sanatioPlanova}</td>                       <!--53-->
@@ -473,4 +486,16 @@ document.addEventListener("DOMContentLoaded", () => {
   <td>${monthTotal.uop.toFixed(1)}</td>             <!--62-->
 `;
   summaryBody2.appendChild(totalTr2);
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const savedStart = localStorage.getItem("summaryStartDate");
+  const savedEnd = localStorage.getItem("summaryEndDate");
+
+  if (savedStart) startDateInput.value = savedStart;
+  if (savedEnd) endDateInput.value = savedEnd;
+
+  // Викликаємо buildSummary із збереженими датами, якщо вони є
+  buildSummary(savedStart, savedEnd);
 });
+
+window.buildSummary = buildSummary;

@@ -39,28 +39,53 @@ document.addEventListener("DOMContentLoaded", () => {
     yearSelect.appendChild(option);
   }
 });
-const doctorSelect = document.getElementById("doctorSelect");
-// Список лікарів
-const doctors = ["Дмитриєнко Віталій Вячеславович"];
 
-// Заповнення select
-doctors.forEach((doc) => {
-  const option = document.createElement("option");
-  option.value = doc;
-  option.textContent = doc;
-  doctorSelect.appendChild(option);
-});
+const doctorInput = document.getElementById("doctorInput");
 
-// === Завантаження з localStorage ===
+// Завантаження з localStorage
 const savedDoctor = localStorage.getItem("selectedDoctor");
 if (savedDoctor) {
-  doctorSelect.value = savedDoctor;
+  doctorInput.value = savedDoctor;
 }
 
-// === Збереження при зміні ===
-doctorSelect.addEventListener("change", () => {
-  localStorage.setItem("selectedDoctor", doctorSelect.value);
+// Збереження при зміні
+doctorInput.addEventListener("input", () => {
+  localStorage.setItem("selectedDoctor", doctorInput.value);
 });
+
+function makeToothInputsPersistent() {
+  const tbody = document.getElementById("tableBody");
+
+  tbody.addEventListener("input", (e) => {
+    const input = e.target;
+    if (input.classList.contains("tooth-input")) {
+      // Використовуємо унікальний ключ для кожного input в рядку
+      const rowIndex = Array.from(tbody.querySelectorAll("tr")).indexOf(
+        input.closest("tr"),
+      );
+      const colIndex = Array.from(
+        input.closest("td").parentNode.children,
+      ).indexOf(input.closest("td"));
+      const key = `toothInput_${rowIndex}_${colIndex}`;
+      localStorage.setItem(key, input.value);
+    }
+  });
+}
+
+// При завантаженні відновлюємо значення
+function restoreToothInputs() {
+  const tbody = document.getElementById("tableBody");
+  tbody.querySelectorAll("tr").forEach((row, rowIndex) => {
+    row.querySelectorAll("td").forEach((td, colIndex) => {
+      const input = td.querySelector(".tooth-input");
+      if (input) {
+        const key = `toothInput_${rowIndex}_${colIndex}`;
+        const savedValue = localStorage.getItem(key);
+        if (savedValue) input.value = savedValue;
+      }
+    });
+  });
+}
 
 const tbody = document.getElementById("tableBody");
 
@@ -180,6 +205,7 @@ const procedurePoints = {
   операція_інші: 1,
   рентген: 1,
   планова_санація: 1,
+  сановано: 1,
   гігієна: 1,
   навчання_догляду: 1,
   професійна_гігієна: 1,
@@ -309,6 +335,8 @@ function loadRows() {
 
   updateRowNumbers();
   makeCellsEditable();
+  makeToothInputsPersistent();
+  restoreToothInputs();
 }
 
 // tbody.addEventListener("input", saveAllRows);

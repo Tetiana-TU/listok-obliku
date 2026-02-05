@@ -203,26 +203,34 @@ button {
   font-family: "Times New Roman", serif;
 }
 
-.period-right select {
-  border: none;
-  font-size: 18px; /* Збільшений шрифт для ПІБ */
-  font-weight: 600; /* Трохи жирніше */
-  background: transparent;
-  padding: 2px 6px;
-  cursor: pointer;
+.period-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#doctorInput {
+  width: 100%; /* займає всю ширину контейнера */
+  font-size: 20px; /* великий розмір тексту */
+  font-weight: 600; /* трохи жирніше */
+  font-family: "Times New Roman", serif; /* гарний шрифт для тексту */
+  padding: 6px 8px; /* внутрішні відступи */
+  border: none; /* прибираємо стандартну рамку */
+  border-bottom: 1px solid #000; /* чорна рисочка під полем */
+  background-color: transparent; /* прозорий фон */
+  text-transform: capitalize; /* великі літери на початку слів */
+  color: #000; /* текст чорного кольору */
+  outline: none; /* прибираємо обводку при фокусі */
+  box-sizing: border-box;
   text-align: center;
-  border-bottom: 1px solid #000; /* Рисочка під текстом */
-  width: 100%; /* Рисочка коротша на половину блоку */
-  margin: 0 auto; /* Центруємо по горизонталі */
-  display: block; /* Щоб margin працював */
 }
 
-.period-right .hint {
-  font-size: 12px;
-  margin-top: 4px;
-  text-align: center; /* Вирівнювання по центру */
-  width: 100%; /* Займає всю ширину контейнера */
+/* ефект при фокусі */
+#doctorInput:focus {
+  border-bottom-color: #007bff; /* синя рисочка при фокусі */
+  transition: border-color 0.3s;
 }
+
 tbody td[contenteditable="true"] {
   border: 1px solid #aaa;
   min-width: auto;
@@ -314,53 +322,99 @@ tbody td[contenteditable="true"]:focus {
    СТИЛІ ДЛЯ ДРУКУ
 ========================= */
 @media print {
+  body,
+  table,
+  th,
+  td,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  input,
+  select,
+  option {
+    color: black !important;
+  }
+
+  /* Для випадків, коли є фони, робимо прозорими або білого кольору */
+  body,
+  table,
+  th,
+  td {
+    background: white !important;
+  }
+
   body {
     margin: 0;
     font-size: 8px;
-  }
-  .form-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    font-family: Arial, sans-serif;
-  }
-  /* Ховаємо все зайве */
-  .controls,
-  .no-print,
-  button {
-    display: none !important;
-  }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      font-family: Arial, sans-serif;
+    }
+    /* Ховаємо все зайве */
+    .controls,
+    .no-print,
+    button {
+      display: none !important;
+    }
 
-  th,
-  td {
-    border: 1px solid black;
-    padding: 3px;
-    text-align: center;
-  }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-  /* Заголовки не розривати */
-  thead {
-    display: table-header-group;
-  }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 3px;
+      text-align: center;
+    }
 
-  tr {
-    page-break-inside: avoid;
-  }
+    /* Заголовки не розривати */
+    thead {
+      display: table-header-group;
+    }
 
-  /* Вертикальні заголовки */
-  .vertical {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-  }
+    tr {
+      page-break-inside: avoid;
+    }
 
-  /* Забрати рамки input/select */
-  td[contenteditable="true"] {
-    outline: none;
+    /* Вертикальні заголовки */
+    .vertical {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    /* Забрати рамки input/select */
+    td[contenteditable="true"] {
+      outline: none;
+    }
+    input::placeholder {
+      color: transparent;
+    }
+    /* При друку ховаємо стандартні стрілочки у select */
+    select {
+      -webkit-appearance: none; /* для Chrome, Safari */
+      -moz-appearance: none; /* для Firefox */
+      appearance: none; /* стандарт */
+      border: none; /* прибираємо рамку */
+      background: transparent; /* прозорий фон */
+      color: #000; /* текст чорного кольору */
+      font-size: 16px; /* можна збільшити шрифт для друку */
+      text-align: center; /* текст по центру */
+      pointer-events: none; /* заблокувати взаємодію */
+    }
+
+    /* При необхідності можна прибрати фон у select */
+    select::-ms-expand {
+      display: none; /* для IE/Edge */
+    }
   }
 }
