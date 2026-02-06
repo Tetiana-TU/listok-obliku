@@ -107,6 +107,7 @@ function buildSummary(startDateStr = null, endDateStr = null) {
         ProfessionalOralHygiene: 0,
         RemineralizationTherapy: 0,
         PitAndFissureSealing: 0,
+        sanatio: 0,
         uop: 0,
       };
     }
@@ -130,55 +131,74 @@ function buildSummary(startDateStr = null, endDateStr = null) {
 
     const age = Number(row[COL.AGE]);
     const diagnosis = [row["9-1"], row["9-2"]].filter(Boolean);
+    const procedures = [row["10-1"], row["10-2"], row["10-3"]];
 
-    diagnosis.forEach((diagnosis) => {
-      if (diagnosis === "K02_Permanent") {
-        groupedByDate[date].cariesPermanent += 1;
-        if (age <= 17) groupedByDate[date].cariesPermanentChildren += 1;
-      }
+    const hasEmergency = procedures.includes("невідкладна_допомога");
+    if (!hasEmergency) {
+      diagnosis.forEach((diagnosis) => {
+        const helpType = row[("10-1", "10-2", "10-3")];
+        if (helpType === "невідкладна_допомога") {
+          return;
+        }
+        if (diagnosis === "K02_Permanent") {
+          groupedByDate[date].cariesPermanent += 1;
+          if (age <= 17) groupedByDate[date].cariesPermanentChildren += 1;
+        }
 
-      if (diagnosis === "K02_Temporary") {
-        groupedByDate[date].cariesTemporary += 1;
-        if (age <= 17) groupedByDate[date].cariesChildren += 1;
-      }
-    });
+        if (diagnosis === "K02_Temporary") {
+          groupedByDate[date].cariesTemporary += 1;
+          if (age <= 17) groupedByDate[date].cariesChildren += 1;
+        }
+      });
+    }
 
     // ПУЛЬПІТ
-    diagnosis.forEach((diagnosis) => {
-      if (diagnosis === "K04.0_Permanent") {
-        groupedByDate[date].pulpitisPermanent += 1;
-        if (age <= 17) groupedByDate[date].pulpitisPermanentChildren += 1;
-      }
+    if (!hasEmergency) {
+      diagnosis.forEach((diagnosis) => {
+        if (diagnosis === "K04.0_Permanent") {
+          groupedByDate[date].pulpitisPermanent += 1;
+          if (age <= 17) groupedByDate[date].pulpitisPermanentChildren += 1;
+        }
 
-      if (diagnosis === "K04.0_Temporary") {
-        groupedByDate[date].pulpitisTemporary += 1;
-      }
+        if (diagnosis === "K04.0_Temporary") {
+          groupedByDate[date].pulpitisTemporary += 1;
+        }
 
-      if (diagnosis?.includes("K04.0") && age <= 17) {
-        groupedByDate[date].pulpitisChildren += 1;
-      }
-    });
+        if (diagnosis?.includes("K04.0") && age <= 17) {
+          groupedByDate[date].pulpitisChildren += 1;
+        }
+      });
+    }
 
     // ПЕРІОДОНТИТ
-    diagnosis.forEach((diagnosis) => {
-      if (diagnosis === "K04.4_Permanent") {
-        groupedByDate[date].periodontitisPermanent += 1;
-        if (age <= 17) groupedByDate[date].periodontitisPermanentChildren += 1;
-      }
+    if (!hasEmergency) {
+      diagnosis.forEach((diagnosis) => {
+        if (diagnosis === "K04.4_Permanent") {
+          groupedByDate[date].periodontitisPermanent += 1;
+          if (age <= 17)
+            groupedByDate[date].periodontitisPermanentChildren += 1;
+        }
 
-      if (diagnosis === "K04.4_Temporary") {
-        groupedByDate[date].periodontitisTemporary += 1;
-      }
+        if (diagnosis === "K04.4_Temporary") {
+          groupedByDate[date].periodontitisTemporary += 1;
+        }
 
-      if (diagnosis?.includes("K04.4") && age <= 17) {
-        groupedByDate[date].periodontitisChildren += 1;
-      }
-    });
+        if (diagnosis?.includes("K04.4") && age <= 17) {
+          groupedByDate[date].periodontitisChildren += 1;
+        }
+      });
+    }
 
     // ЗНЕБОЛЮВАННЯ
     const anesthesia = row[11];
     if (anesthesia === "value2") groupedByDate[date].anesthesiaLocal += 1;
     if (anesthesia === "value3") groupedByDate[date].anesthesiaGeneral += 1;
+
+    const sanValue = row["12"];
+
+    if (sanValue === "San") {
+      groupedByDate[date].sanatio += 1;
+    }
 
     const uop = parseFloat(row["14"]);
     if (!isNaN(uop)) groupedByDate[date].uop += uop;
@@ -222,9 +242,9 @@ function buildSummary(startDateStr = null, endDateStr = null) {
       if (procedure === "зняття_напластувань") {
         groupedByDate[date].naplast += 1;
       }
-      if (procedure === "медикаментозне_лікування_пародонту") {
-        groupedByDate[date].medlikparodont += 1;
-      }
+      // if (procedure === "медикаментозне_лікування_пародонту") {
+      //   groupedByDate[date].medlikparodont += 1;
+      // }
       if (procedure === "кюретаж") {
         groupedByDate[date].kuretazh += 1;
       }
@@ -233,11 +253,6 @@ function buildSummary(startDateStr = null, endDateStr = null) {
       }
       if (procedure === "шинування_зубів") {
         groupedByDate[date].shinuvanya += 1;
-      }
-
-      if (procedure === "сановано") {
-        groupedByDate[date].sanatioPlanova += 1;
-        if (age <= 17) groupedByDate[date].sanatioPlanovaChildren += 1;
       }
 
       if (procedure === "лікування_слизової_рота") {
@@ -341,39 +356,39 @@ function buildSummary(startDateStr = null, endDateStr = null) {
         <td>${day.date}</td>                             <!--1-->
         <td></td>                                        <!--2-->
         <td>${day.visits}</td>                           <!--3-->
-        <td>${day.rural}</td>                            <!--4--> 
+        <td></td>                            <!--4--> 
         <td>${day.primaryTotal}/${day.primaryRural}</td> <!--5-->
-        <td>${day.primaryChildren}</td>                  <!--6--> 
+        <td></td>                  <!--6--> 
         <td>${day.emergency}</td>                        <!--7--> 
         <td>${day.groupSum}</td>     <!--8 колонка: сума 9,11,12,14,16,17-->
         <td>${day.cariesPermanent}</td>                 <!--9-->
-        <td>${day.cariesPermanentChildren}</td>         <!--10-->
-        <td>${day.cariesTemporary}</td>                 <!--11-->  
+        <td></td>         <!--10-->
+        <td></td>                 <!--11-->  
         <td>${day.pulpitisPermanent}</td>               <!--12-->
-        <td>${day.pulpitisPermanentChildren}</td>        <!--13--> 
+        <td></td>        <!--13--> 
         <td>${day.periodontitisPermanent}</td>           <!--14-->
-        <td>${day.periodontitisPermanentChildren}</td>  <!--15-->
-        <td>${day.pulpitisTemporary}</td>                <!--16-->
-        <td>${day.periodontitisTemporary}</td>           <!--17-->
-        <td>${day.P_vitalTotal}</td>                     <!--18-->
-        <td>${day.P_vitalChildren}</td>                  <!--19-->
-        <td>${day.PtTotal}</td>                          <!--20-->
-        <td>${day.PtChildren}</td>                      <!--21-->
-        <td>${day.depulped}</td>                           <!--22-->
+        <td></td>  <!--15-->
+        <td></td>                <!--16-->
+        <td></td>           <!--17-->
+        <td></td>                     <!--18-->
+        <td></td>                  <!--19-->
+        <td></td>                          <!--20-->
+        <td></td>                      <!--21-->
+        <td></td>                           <!--22-->
         <td>${day.PlC}</td>                              <!--23-->
-        <td>${day.PlAm}</td>                             <!--24-->
-        <td>${day.PlCC}</td>                            <!--25-->
+        <td></td>                             <!--24-->
+        <td></td>                            <!--25-->
         <td>${day.PlLC}</td>                               <!--26--> 
         <td>${day.anesthesiaLocal}/${day.anesthesiaGeneral}</td> <!--27-->
-        <td>${day.column28Sum}</td>                     <!-- 28 колонка -->
-        <td>${day.column28ChildrenSum}</td> <!--29 колонка: сума процедур для дітей до 17 років-->
+        <td></td>                                          <!-- 28-->
+        <td></td>                                           <!--29-->
         <td>${day.naplast}</td>                              <!--30--> 
-        <td>${day.medlikparodont}</td>                        <!--31-->
-        <td>${day.kuretazh}</td>                             <!--32-->
-        <td>${day.klapteva}</td>                             <!--33-->
-        <td>${day.shinuvanya}</td>                           <!--34-->
-        <td>${day.mucosaTreatment}</td>                      <!--35-->
-        <td>${day.mucosaTreatmentChildren}</td>             <!--36-->
+        <td>${day.naplast}</td>                        <!--31-->
+        <td></td>                             <!--32-->
+        <td></td>                             <!--33-->
+        <td></td>                           <!--34-->
+        <td></td>                      <!--35-->
+        <td></td>             <!--36-->
         `;
     summaryBody1.appendChild(tr);
   });
@@ -386,39 +401,39 @@ function buildSummary(startDateStr = null, endDateStr = null) {
   <td>Всього</td>                                    <!--1: дата-->
   <td></td>                                          <!--2-->
   <td>${monthTotal.visits}</td>                     <!--3-->
-  <td>${monthTotal.rural}</td>                       <!--4-->
+  <td></td>                       <!--4-->
   <td>${monthTotal.primaryTotal}/${monthTotal.primaryRural}</td> <!--5-->
-  <td>${monthTotal.primaryChildren}</td>            <!--6-->
+  <td></td>            <!--6-->
   <td>${monthTotal.emergency}</td>                  <!--7-->
   <td>${monthTotal.groupSum}</td>                   <!--8-->
   <td>${monthTotal.cariesPermanent}</td>            <!--9-->
-  <td>${monthTotal.cariesPermanentChildren}</td>    <!--10-->
-  <td>${monthTotal.cariesTemporary}</td>            <!--11-->  
+  <td></td>    <!--10-->
+  <td></td>            <!--11-->  
   <td>${monthTotal.pulpitisPermanent}</td>          <!--12-->
-  <td>${monthTotal.pulpitisPermanentChildren}</td>  <!--13--> 
+  <td></td>  <!--13--> 
   <td>${monthTotal.periodontitisPermanent}</td>     <!--14-->
-  <td>${monthTotal.periodontitisPermanentChildren}</td> <!--15-->
-  <td>${monthTotal.pulpitisTemporary}</td>          <!--16-->
-  <td>${monthTotal.periodontitisTemporary}</td>     <!--17-->
-  <td>${monthTotal.P_vitalTotal}</td>               <!--18-->
-  <td>${monthTotal.P_vitalChildren}</td>            <!--19-->
-  <td>${monthTotal.PtTotal}</td>                    <!--20-->
-  <td>${monthTotal.PtChildren}</td>                 <!--21-->
-  <td>${monthTotal.depulped}</td>                   <!--22-->
+  <td></td> <!--15-->
+  <td></td>          <!--16-->
+  <td></td>     <!--17-->
+  <td></td>               <!--18-->
+  <td></td>            <!--19-->
+  <td></td>                    <!--20-->
+  <td></td>                 <!--21-->
+  <td></td>                   <!--22-->
   <td>${monthTotal.PlC}</td>                        <!--23-->
-  <td>${monthTotal.PlAm}</td>                       <!--24-->
-  <td>${monthTotal.PlCC}</td>                       <!--25-->
+  <td></td>                       <!--24-->
+  <td></td>                       <!--25-->
   <td>${monthTotal.PlLC}</td>                       <!--26--> 
   <td>${monthTotal.anesthesiaLocal}/${monthTotal.anesthesiaGeneral}</td> <!--27-->
-  <td>${monthTotal.column28Sum}</td>                <!--28-->
-  <td>${monthTotal.column28ChildrenSum}</td>        <!--29-->
+  <td></td>                                         <!--28-->
+  <td></td>                                         <!--29-->
   <td>${monthTotal.naplast}</td>                    <!--30--> 
-  <td>${monthTotal.medlikparodont}</td>             <!--31-->
-  <td>${monthTotal.kuretazh}</td>                   <!--32-->
-  <td>${monthTotal.klapteva}</td>                   <!--33-->
-  <td>${monthTotal.shinuvanya}</td>                 <!--34-->
-  <td>${monthTotal.mucosaTreatment}</td>            <!--35-->
-  <td>${monthTotal.mucosaTreatmentChildren}</td>    <!--36-->
+  <td>${monthTotal.naplast}</td>             <!--31-->
+  <td></td>                   <!--32-->
+  <td></td>                   <!--33-->
+  <td></td>                 <!--34-->
+  <td></td>            <!--35-->
+  <td></td>    <!--36-->
 `;
   summaryBody1.appendChild(totalTr1);
 
@@ -437,14 +452,14 @@ function buildSummary(startDateStr = null, endDateStr = null) {
      <td>${day.OperatioTumors}</td>                         <!--46-->
      <td>${day.OperatioImplants}</td>                     <!--47-->
      <td>${day.OperatioOthers}</td>                       <!--48-->
-     <td>${day.sanatioPlanova + day.sanatioPlanovaChildren}</td> <!--49-->
+     <td>${day.sanatio}                                </td> <!--49-->
      <td></td>                                           <!--50-->
      <td></td>                                            <!--51-->
      <td></td>                                           <!--52-->
-     <td>${day.sanatioPlanova}</td>                       <!--53-->
+     <td></td>                                            <!--53-->
      <td></td>                                             <!--54-->
      <td></td>                                            <!--55-->
-     <td>${day.sanatioPlanovaChildren}</td>               <!--56-->  
+     <td></td>                                              <!--56-->  
      <td>${day.HygieneEducation}</td>                     <!--57-->
      <td>${day.OralCare}</td>                             <!--58-->
      <td>${day.ProfessionalOralHygiene}</td>             <!--59-->
@@ -470,14 +485,14 @@ function buildSummary(startDateStr = null, endDateStr = null) {
   <td>${monthTotal.OperatioTumors}</td>               <!--46-->
   <td>${monthTotal.OperatioImplants}</td>             <!--47-->
   <td>${monthTotal.OperatioOthers}</td>               <!--48-->
-  <td>${monthTotal.sanatioPlanova + monthTotal.sanatioPlanovaChildren}</td> <!--49-->
+  <td>${monthTotal.sanatio}</td>                      <!--49-->
   <td></td>                                          <!--50-->
   <td></td>                                          <!--51-->
   <td></td>                                          <!--52-->
-  <td>${monthTotal.sanatioPlanova}</td>              <!--53-->
+  <td></td>                                            <!--53-->
   <td></td>                                           <!--54-->
   <td></td>                                          <!--55-->
-  <td>${monthTotal.sanatioPlanovaChildren}</td>     <!--56-->  
+  <td>                                              <!--56-->  
   <td>${monthTotal.HygieneEducation}</td>           <!--57-->
   <td>${monthTotal.OralCare}</td>                   <!--58-->
   <td>${monthTotal.ProfessionalOralHygiene}</td>   <!--59-->

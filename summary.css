@@ -119,7 +119,9 @@ table td {
   body {
     background: none;
   }
-
+  .controls {
+    display: none !important;
+  }
   .summary-table th,
   .summary-table td {
     background: #fff;
